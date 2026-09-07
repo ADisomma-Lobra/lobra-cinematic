@@ -14,28 +14,89 @@
     return cache[name];
   }
 
-  /* ---------- Storyblok test: FAQ content is fetched live from the CMS
-     instead of data/faq.json, reshaped into the same {id, it:{q,a}, en:{q,a}}
-     array renderFaq already expects, so nothing else in this file changes.
-     The whole one-page site is modelled as a single "home" story (there is
-     no separate /faq page to preview — everything lives in one page, so the
-     FAQ list is a nested block inside home's body, not its own root story).
-     Falls back to the local JSON if Storyblok is unreachable or the story
-     has no published version yet. ---------- */
-  const STORYBLOK_TOKEN = 'jJ5cGkpiZiVKbJtVZad1agtt';
-  function getStoryblokFaq() {
-    return fetch(`https://api.storyblok.com/v2/cdn/stories/home?token=${STORYBLOK_TOKEN}&version=published`, { cache: 'no-store' })
-      .then((r) => { if (!r.ok) throw new Error('storyblok home: ' + r.status); return r.json(); })
-      .then((json) => {
-        const faqBlock = json.story.content.body.find((b) => b.component === 'faq_list');
-        if (!faqBlock) throw new Error('storyblok home: no faq_list block in body');
-        return faqBlock.items.map((item) => ({
-          id: item._uid,
-          it: { q: item.question, a: item.answer },
-          en: { q: item.question__i18n__en || item.question, a: item.answer__i18n__en || item.answer }
-        }));
+  /* ---------- Storyblok: every data-driven section below reads from the
+     same shared fetch (js/cms.js — one "home" story per language). Content
+     paints once and switches language client-side by indexing into an
+     already-fetched {it, en} shape (see paint() below in each render
+     function), so here we fetch BOTH language-resolved copies up front and
+     zip them together into that same {it:{...}, en:{...}} shape each render
+     function already expects from data/*.json — nothing downstream changes.
+     Falls back to the matching local JSON file if Storyblok is unreachable
+     or the story is missing that block. ---------- */
+  function fromStoryblokOr(component, reshape, localName) {
+    return Promise.all([window.LobraCMS.getHome('it'), window.LobraCMS.getHome('en')])
+      .then(([bodyIt, bodyEn]) => {
+        const blockIt = bodyIt && window.LobraCMS.findBlock(bodyIt, component);
+        const blockEn = bodyEn && window.LobraCMS.findBlock(bodyEn, component);
+        if (!blockIt || !blockEn) throw new Error('storyblok home: no ' + component + ' block in body');
+        return reshape(blockIt, blockEn);
       })
-      .catch((err) => { console.warn('Storyblok FAQ fetch failed, using local data/faq.json instead:', err); return getData('faq'); });
+      .catch((err) => {
+        console.warn(`Storyblok ${component} fetch failed, using local data/${localName}.json instead:`, err);
+        return getData(localName);
+      });
+  }
+
+  function getStoryblokFaq() {
+    return fromStoryblokOr('faq_list', (it, en) =>
+      it.items.map((item, i) => ({
+        id: item._uid,
+        it: { q: item.question, a: item.answer },
+        en: { q: en.items[i].question, a: en.items[i].answer }
+      })), 'faq');
+  }
+  function getStoryblokPartners() {
+    return fromStoryblokOr('partners_list', (it) =>
+      it.items.map((item) => ({ name: item.name, slug: item.slug, brandColor: item.brand_color })), 'partners');
+  }
+  function getStoryblokSectors() {
+    return fromStoryblokOr('sectors_list', (it, en) =>
+      it.items.map((item, i) => ({
+        icon: item.icon,
+        tone: parseInt(item.tone, 10),
+        photo: window.LobraCMS.assetUrl(item, 'photo'),
+        it: { name: item.name, summary: item.summary },
+        en: { name: en.items[i].name, summary: en.items[i].summary }
+      })), 'sectors');
+  }
+  function getStoryblokStats() {
+    return fromStoryblokOr('stats_list', (it, en) =>
+      it.items.map((item, i) => ({
+        num: parseInt(item.num, 10), suffix: item.suffix,
+        it: item.label, en: en.items[i].label
+      })), 'stats');
+  }
+  function getStoryblokTestimonials() {
+    return fromStoryblokOr('testimonials_list', (it, en) =>
+      it.items.map((item, i) => ({
+        id: item._uid,
+        it: { quote: item.quote, name: item.name, role: item.role },
+        en: { quote: en.items[i].quote, name: en.items[i].name, role: en.items[i].role }
+      })), 'testimonials');
+  }
+  function getStoryblokMediaPhoto() {
+    return window.LobraCMS.getHome('it').then((body) => {
+      const block = body && window.LobraCMS.findBlock(body, 'media_copy');
+      return block && window.LobraCMS.assetUrl(block, 'photo');
+    }).catch(() => null);
+  }
+
+  /* ---------- Act 3/4: team photo behind the circle reveal / scrub copy —
+     same gradient stack as the CSS default, just swapping in the Storyblok
+     asset URL when available (falls back to the CSS-declared local photo
+     if Storyblok has no image set) ---------- */
+  function renderMediaPhoto() {
+    const scenes = document.querySelectorAll('.media-scene');
+    if (!scenes.length) return Promise.resolve();
+    return getStoryblokMediaPhoto().then((url) => {
+      if (!url) return;
+      const bg =
+        'radial-gradient(120% 100% at 15% 20%, rgba(252,81,88,.35), transparent 55%),' +
+        'radial-gradient(100% 90% at 85% 85%, rgba(255,255,255,.08), transparent 60%),' +
+        'linear-gradient(135deg, rgba(11,15,20,.72) 0%, rgba(27,35,44,.55) 55%, rgba(42,53,64,.45) 100%),' +
+        `url('${url}')`;
+      scenes.forEach((el) => { el.style.background = bg; el.style.backgroundSize = 'cover'; el.style.backgroundPosition = 'center'; });
+    });
   }
   const svgCache = {};
   function getBrandSvg(slug) {
@@ -63,7 +124,7 @@
   function renderTools(containerId) {
     const el = document.getElementById(containerId);
     if (!el) return Promise.resolve();
-    return getData('partners').then((list) =>
+    return getStoryblokPartners().then((list) =>
       Promise.all(list.map((p) => getBrandSvg(p.slug).then((svg) => ({ ...p, svg })))).then((withSvg) => {
         el.innerHTML = withSvg
           .map((p, i) => {
@@ -80,7 +141,7 @@
     const listEl = document.getElementById(listId);
     const bgEl = document.getElementById(bgId);
     if (!listEl) return Promise.resolve();
-    return getData('sectors').then((list) => {
+    return getStoryblokSectors().then((list) => {
       const paint = () => {
         const lang = getLang();
         listEl.innerHTML = list
@@ -95,7 +156,12 @@
           )
           .join('');
         if (bgEl) {
-          bgEl.innerHTML = list.map((s, i) => `<div class="tone tone-${s.tone}${i === 0 ? ' is-active' : ''}" data-tone-panel="${s.tone}"></div>`).join('');
+          bgEl.innerHTML = list
+            .map((s, i) => {
+              const photoStyle = s.photo ? ` style="background-image:url('${esc(s.photo)}')"` : '';
+              return `<div class="tone tone-${s.tone}${i === 0 ? ' is-active' : ''}" data-tone-panel="${s.tone}"${photoStyle}></div>`;
+            })
+            .join('');
         }
       };
       paint();
@@ -108,7 +174,7 @@
   function renderStats(containerId) {
     const el = document.getElementById(containerId);
     if (!el) return Promise.resolve();
-    return getData('stats').then((list) => {
+    return getStoryblokStats().then((list) => {
       const paint = () => {
         const lang = getLang();
         el.innerHTML = list
@@ -130,7 +196,7 @@
   function renderTestimonials(containerId) {
     const el = document.getElementById(containerId);
     if (!el) return Promise.resolve();
-    return getData('testimonials').then((list) => {
+    return getStoryblokTestimonials().then((list) => {
       const paint = () => {
         const lang = getLang();
         el.innerHTML = list
@@ -205,5 +271,5 @@
     });
   }
 
-  window.LobraRender = { renderTools, renderSectors, renderStats, renderTestimonials, renderFaq };
+  window.LobraRender = { renderTools, renderSectors, renderStats, renderTestimonials, renderFaq, renderMediaPhoto };
 })();

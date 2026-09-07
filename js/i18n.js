@@ -26,10 +26,53 @@
     return path.split('.').reduce((acc, key) => (acc && acc[key] !== undefined ? acc[key] : undefined), obj);
   }
 
-  async function loadDictionary(lang) {
+  async function loadLocalDictionary(lang) {
     const res = await fetch(`content/${lang}.json`, { cache: 'no-store' });
     if (!res.ok) throw new Error(`Impossibile caricare content/${lang}.json (${res.status})`);
     return res.json();
+  }
+
+  // builds a dictionary shaped exactly like content/{lang}.json, but sourced
+  // from the Storyblok "home" story's *_copy blocks — every data-i18n path
+  // used across the page keeps working unchanged either way. `body` here is
+  // already the language-resolved copy of the story (see cms.js), so every
+  // field is read directly, no __i18n__ suffix involved at this layer.
+  function dictionaryFromStoryblok(body) {
+    const CMS = window.LobraCMS;
+    const find = (name) => CMS.findBlock(body, name);
+    const t = (block, key) => (block ? block[key] : undefined);
+    const meta = find('meta_copy'), nav = find('nav_copy'), hero = find('hero_copy'), tools = find('tools_copy'),
+      media = find('media_copy'), trust = find('trust_copy'), sectors = find('sectors_copy'),
+      stats = find('stats_copy'), stories = find('stories_copy'), faq = find('faq_copy'),
+      finalCta = find('finalcta_copy'), footer = find('footer_copy');
+    return {
+      meta: { title: t(meta, 'title') },
+      nav: { tools: t(nav, 'tools'), journey: t(nav, 'journey'), sectors: t(nav, 'sectors'), stories: t(nav, 'stories'), faq: t(nav, 'faq'), contact: t(nav, 'contact'), cta: t(nav, 'cta') },
+      hero: { eyebrow: t(hero, 'eyebrow'), title: t(hero, 'title'), lede: t(hero, 'lede'), cta1: t(hero, 'cta1'), cta2: t(hero, 'cta2') },
+      tools: { eyebrow: t(tools, 'eyebrow'), title: t(tools, 'title'), lede: t(tools, 'lede') },
+      media: { tag: t(media, 'tag'), caption: t(media, 'caption'), scrub: t(media, 'scrub') },
+      trust: {
+        eyebrow: t(trust, 'eyebrow'), title: t(trust, 'title'), lede: t(trust, 'lede'),
+        badges: ((trust && trust.badges) || []).map((b) => ({ num: b.num, label: t(b, 'label') }))
+      },
+      sectors: { eyebrow: t(sectors, 'eyebrow'), title: t(sectors, 'title'), lede: t(sectors, 'lede'), tag: t(sectors, 'tag') },
+      stats: { eyebrow: t(stats, 'eyebrow'), title: t(stats, 'title'), cta: t(stats, 'cta') },
+      stories: { eyebrow: t(stories, 'eyebrow'), title: t(stories, 'title'), disclaimer: t(stories, 'disclaimer') },
+      faq: { eyebrow: t(faq, 'eyebrow'), title: t(faq, 'title') },
+      finalCta: { eyebrow: t(finalCta, 'eyebrow'), title: t(finalCta, 'title'), lede: t(finalCta, 'lede'), action1: t(finalCta, 'action1'), action2: t(finalCta, 'action2') },
+      footer: {
+        tagline: t(footer, 'tagline'),
+        col: { nav: t(footer, 'nav_label'), group: t(footer, 'group_label') },
+        copyright: t(footer, 'copyright'),
+        note: t(footer, 'note')
+      }
+    };
+  }
+
+  async function loadDictionary(lang) {
+    const body = window.LobraCMS ? await window.LobraCMS.getHome(lang) : null;
+    if (body) return dictionaryFromStoryblok(body);
+    return loadLocalDictionary(lang);
   }
 
   function applyDictionary(dict) {
