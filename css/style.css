@@ -275,15 +275,26 @@ html.no-js .reveal{ opacity: 1; transform: none; }
   z-index: 5; /* paint above the orbit's text/bubbles (z-index 2) as it grows */
 }
 .reveal-media{ position: absolute; inset: 0; width: 100vw; height: 100dvh; left: 50%; top: 50%; transform: translate(-50%,-50%); }
-.media-scene{
-  position: absolute; inset: 0; background:
+.media-scene{ position: absolute; inset: 0; background: var(--ink); overflow: hidden; }
+.media-video{ position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
+/* same tint the photo fallback used, minus the image — the video sits under
+   it; when there's no video the fallback below paints the image itself */
+.media-scene-overlay{
+  position: absolute; inset: 0; z-index: 1; background:
+    radial-gradient(120% 100% at 15% 20%, rgba(252,81,88,.35), transparent 55%),
+    radial-gradient(100% 90% at 85% 85%, rgba(255,255,255,.08), transparent 60%),
+    linear-gradient(135deg, rgba(11,15,20,.72) 0%, rgba(27,35,44,.55) 55%, rgba(42,53,64,.45) 100%);
+}
+.media-scene.has-photo-fallback{
+  background:
     radial-gradient(120% 100% at 15% 20%, rgba(252,81,88,.35), transparent 55%),
     radial-gradient(100% 90% at 85% 85%, rgba(255,255,255,.08), transparent 60%),
     linear-gradient(135deg, rgba(11,15,20,.72) 0%, rgba(27,35,44,.55) 55%, rgba(42,53,64,.45) 100%),
     url("../images/photos/office-team.jpg");
   background-size: cover; background-position: center;
 }
-.media-scene .current-line{ position: absolute; inset: 0; opacity: .5; }
+.media-scene.has-photo-fallback .media-scene-overlay{ display: none; }
+.media-scene .current-line{ position: absolute; inset: 0; z-index: 2; opacity: .5; }
 .media-caption{
   position: absolute; left: 0; right: 0; bottom: 9%; z-index: 4; text-align: center; padding-inline: var(--gutter);
   font-family: var(--font-mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.55);
@@ -338,7 +349,11 @@ html.no-js .reveal{ opacity: 1; transform: none; }
 .tone-4{ background: linear-gradient(160deg, #0B0F14 0%, #131922 60%, #1b232c 100%); }
 .tone-5{ background: url("../images/photos/sector-other.jpg"); background-size: cover; background-position: center; }
 .industries-bg::after{ content:''; position: absolute; inset: 0; background: linear-gradient(100deg, rgba(11,15,20,.88) 0%, rgba(11,15,20,.72) 45%, rgba(11,15,20,.5) 100%); z-index: 1; }
-.industries-stage .container{ position: relative; z-index: 2; max-width: 1680px; }
+/* flex items with auto cross-axis margins (our .container centering trick)
+   don't stretch to fill — they shrink to content instead, per spec — so an
+   explicit width is needed here, not just a max-width, to actually use the
+   extra room */
+.industries-stage .container{ position: relative; z-index: 2; width: 100%; max-width: min(94vw, 1960px); }
 .industries-head{ margin-bottom: var(--space-7); }
 .industries-list{ border-top: 1px solid rgba(255,255,255,.16); }
 .industry-row{
@@ -349,7 +364,7 @@ html.no-js .reveal{ opacity: 1; transform: none; }
 .industry-row .idx-icon{ color: rgba(255,255,255,.5); transition: color var(--dur-fast) var(--ease-out); }
 .industry-row .idx-icon svg{ width: 22px; height: 22px; }
 .industry-row h3{ font-size: clamp(19px,2vw,26px); color: rgba(255,255,255,.65); transition: color var(--dur-fast) var(--ease-out); }
-.industry-row p{ font-size: 13.5px; color: rgba(255,255,255,.5); max-width: 34ch; display: none; }
+.industry-row p{ font-size: 14.5px; color: rgba(255,255,255,.5); max-width: 48ch; display: none; }
 .industry-row .arrow{ color: rgba(255,255,255,.4); transition: transform var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out); }
 .industry-row.is-active{ background: rgba(255,255,255,.06); }
 .industry-row.is-active .idx-icon{ color: var(--crimson); }
