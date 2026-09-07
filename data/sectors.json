@@ -1,0 +1,37 @@
+[
+  {
+    "id": "fashion-luxury",
+    "icon": "bag",
+    "tone": 1,
+    "it": { "name": "Fashion & Luxury", "summary": "Customer experience e piattaforme dati per maison e brand che vivono di dettaglio ed esclusività." },
+    "en": { "name": "Fashion & Luxury", "summary": "Customer experience and data platforms for maisons and brands built on detail and exclusivity." }
+  },
+  {
+    "id": "retail",
+    "icon": "store",
+    "tone": 2,
+    "it": { "name": "Retail", "summary": "Integrazione tra canale fisico e digitale, per un'esperienza d'acquisto senza soluzione di continuità." },
+    "en": { "name": "Retail", "summary": "Integration between physical and digital channels, for a seamless shopping experience." }
+  },
+  {
+    "id": "manufacturing",
+    "icon": "factory",
+    "tone": 3,
+    "it": { "name": "Manufacturing", "summary": "Digital core e integrazione dei processi produttivi, dalla supply chain al post-vendita." },
+    "en": { "name": "Manufacturing", "summary": "Digital core and process integration, from supply chain to after-sales." }
+  },
+  {
+    "id": "financial-services",
+    "icon": "chart",
+    "tone": 4,
+    "it": { "name": "Financial Services", "summary": "Piattaforme di billing, revenue management e data governance per contesti regolamentati." },
+    "en": { "name": "Financial Services", "summary": "Billing, revenue management and data governance platforms for regulated environments." }
+  },
+  {
+    "id": "other",
+    "icon": "compass",
+    "tone": 5,
+    "it": { "name": "Altri settori", "summary": "Il nostro approccio si adatta a qualsiasi industry con processi e dati da mettere in ordine." },
+    "en": { "name": "Other industries", "summary": "Our approach adapts to any industry that needs its processes and data put in order." }
+  }
+]

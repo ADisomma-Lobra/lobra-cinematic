@@ -1,0 +1,72 @@
+{
+  "meta": { "title": "Lobra — Concept cinematico" },
+  "nav": {
+    "tools": "Tecnologie",
+    "journey": "Chi siamo",
+    "sectors": "Settori",
+    "stories": "Storie",
+    "faq": "FAQ",
+    "contact": "Contatti",
+    "cta": "Contattaci"
+  },
+  "hero": {
+    "eyebrow": "Lobra, moves you",
+    "title": "Dal 2016 trasformiamo la complessità in direzione.",
+    "lede": "Consulenza IT e system integration per chi non vuole solo digitalizzare, ma muoversi meglio.",
+    "cta1": "Scopri il viaggio",
+    "cta2": "Contattaci"
+  },
+  "tools": {
+    "eyebrow": "Con chi costruiamo",
+    "title": "Le tecnologie che guidano il nostro lavoro",
+    "lede": "Siamo partner certificati sulle piattaforme enterprise più diffuse."
+  },
+  "media": {
+    "tag": "Bozza — foto segnaposto, da sostituire con scatti di proprietà",
+    "caption": "Il lavoro di squadra dietro ogni progetto",
+    "scrub": "Non vendiamo software. Diamo una direzione."
+  },
+  "trust": {
+    "eyebrow": "Chi siamo",
+    "title": "Fiducia, costruita dove le azioni incontrano le promesse.",
+    "lede": "Il Gruppo Lobra riunisce competenze diverse — Customer Experience, Microsoft, SAP — sotto un unico approccio: people-first e orientato ai risultati. Lavoriamo fianco a fianco con i nostri clienti, non sopra di loro.",
+    "badges": [
+      { "num": "2016", "label": "Anno di fondazione" },
+      { "num": "3", "label": "Aziende del gruppo" },
+      { "num": "IT + IE", "label": "Italia e Irlanda" }
+    ]
+  },
+  "sectors": {
+    "eyebrow": "Dove lavoriamo",
+    "title": "Settori che accompagniamo",
+    "lede": "Scorri per cambiare settore.",
+    "tag": "Bozza — foto segnaposto, da sostituire con scatti di proprietà"
+  },
+  "stats": {
+    "eyebrow": "In cifre",
+    "title": "Il Gruppo Lobra a colpo d'occhio",
+    "cta": "Parla con noi"
+  },
+  "stories": {
+    "eyebrow": "Cosa dicono di noi",
+    "title": "La voce di chi ha lavorato con noi",
+    "disclaimer": "Esempio illustrativo a scopo dimostrativo: aziende, nomi e citazioni non sono reali."
+  },
+  "faq": {
+    "eyebrow": "FAQ",
+    "title": "Le domande che ci fate più spesso"
+  },
+  "finalCta": {
+    "eyebrow": "Contatti",
+    "title": "Costruiamo la prossima direzione, insieme.",
+    "lede": "Raccontaci a che punto sei: un consulente del Gruppo Lobra ti risponde al più presto.",
+    "action1": "Contattaci",
+    "action2": "Torna in cima"
+  },
+  "footer": {
+    "tagline": "Dal 2016 trasformiamo la complessità in direzione. Customer Experience, System Integration e Data, per aziende che vogliono muoversi meglio.",
+    "col": { "nav": "Naviga", "group": "Gruppo Lobra" },
+    "copyright": "Lobra S.r.l. Tutti i diritti riservati.",
+    "note": "Concept cinematico — Home page, versione dimostrativa."
+  }
+}

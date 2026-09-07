@@ -1,0 +1,72 @@
+{
+  "meta": { "title": "Lobra — Cinematic concept" },
+  "nav": {
+    "tools": "Technologies",
+    "journey": "About us",
+    "sectors": "Industries",
+    "stories": "Stories",
+    "faq": "FAQ",
+    "contact": "Contact",
+    "cta": "Contact us"
+  },
+  "hero": {
+    "eyebrow": "Lobra, moves you",
+    "title": "Since 2016, we turn complexity into direction.",
+    "lede": "IT consulting and system integration for companies that don't just want to digitalise — they want to move better.",
+    "cta1": "Start the journey",
+    "cta2": "Contact us"
+  },
+  "tools": {
+    "eyebrow": "Who we build with",
+    "title": "The technologies that guide our work",
+    "lede": "We're certified partners on the most widely adopted enterprise platforms."
+  },
+  "media": {
+    "tag": "Draft — placeholder photo, to be replaced with owned imagery",
+    "caption": "The teamwork behind every project",
+    "scrub": "We don't sell software. We give direction."
+  },
+  "trust": {
+    "eyebrow": "About us",
+    "title": "Trust, earned where actions meet promises.",
+    "lede": "Gruppo Lobra brings together different expertise — Customer Experience, Microsoft, SAP — under one approach: people-first and results-driven. We work alongside our clients, not above them.",
+    "badges": [
+      { "num": "2016", "label": "Founded" },
+      { "num": "3", "label": "Companies in the group" },
+      { "num": "IT + IE", "label": "Italy and Ireland" }
+    ]
+  },
+  "sectors": {
+    "eyebrow": "Where we work",
+    "title": "Industries we accompany",
+    "lede": "Scroll to change industry.",
+    "tag": "Draft — placeholder photo, to be replaced with owned imagery"
+  },
+  "stats": {
+    "eyebrow": "In numbers",
+    "title": "Gruppo Lobra at a glance",
+    "cta": "Talk to us"
+  },
+  "stories": {
+    "eyebrow": "What they say about us",
+    "title": "The voice of those who worked with us",
+    "disclaimer": "Illustrative example for demo purposes: companies, names and quotes are not real."
+  },
+  "faq": {
+    "eyebrow": "FAQ",
+    "title": "The questions we get asked most"
+  },
+  "finalCta": {
+    "eyebrow": "Contact",
+    "title": "Let's build the next direction, together.",
+    "lede": "Tell us where you stand: a Gruppo Lobra consultant will get back to you shortly.",
+    "action1": "Contact us",
+    "action2": "Back to top"
+  },
+  "footer": {
+    "tagline": "Since 2016 we've turned complexity into direction. Customer Experience, System Integration and Data, for companies that want to move better.",
+    "col": { "nav": "Navigate", "group": "Gruppo Lobra" },
+    "copyright": "Lobra S.r.l. All rights reserved.",
+    "note": "Cinematic concept — Home page, demonstration version."
+  }
+}

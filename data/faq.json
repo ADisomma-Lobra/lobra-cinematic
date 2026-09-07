@@ -1,0 +1,27 @@
+[
+  {
+    "id": "f1",
+    "it": { "q": "Che servizi offre il Gruppo Lobra?", "a": "Customer Experience, System Integration, dati e cloud, IT Consulting, manutenzione applicativa, billing e AI Innovation — otto aree, un solo gruppo di riferimento." },
+    "en": { "q": "What services does Gruppo Lobra offer?", "a": "Customer Experience, System Integration, data and cloud, IT Consulting, application maintenance, billing and AI Innovation — eight areas, one group to work with." }
+  },
+  {
+    "id": "f2",
+    "it": { "q": "In quali settori lavorate?", "a": "Soprattutto Fashion & Luxury, Retail, Manufacturing e Financial Services — ma il nostro approccio si adatta a qualsiasi industry con processi e dati da mettere in ordine." },
+    "en": { "q": "Which industries do you work in?", "a": "Mainly Fashion & Luxury, Retail, Manufacturing and Financial Services — but our approach adapts to any industry with processes and data to put in order." }
+  },
+  {
+    "id": "f3",
+    "it": { "q": "Con quali tecnologie lavorate?", "a": "Siamo partner su Salesforce, SAP, Microsoft e Odoo, con competenze anche su Shopify, Informatica e OpenText. La scelta della piattaforma segue il problema, non il contrario." },
+    "en": { "q": "Which technologies do you work with?", "a": "We're partners on Salesforce, SAP, Microsoft and Odoo, with expertise on Shopify, Informatica and OpenText too. The platform follows the problem, not the other way round." }
+  },
+  {
+    "id": "f4",
+    "it": { "q": "Come si avvia un progetto con voi?", "a": "Con una prima conversazione senza impegno: raccontateci a che punto siete, vi diciamo con chi parlare e cosa serve per partire." },
+    "en": { "q": "How do we get started with you?", "a": "With a first, no-obligation conversation: tell us where you stand, and we'll tell you who to talk to and what it takes to start." }
+  },
+  {
+    "id": "f5",
+    "it": { "q": "Lavorate anche da remoto?", "a": "Sì. Il gruppo ha cinque sedi in Italia e un ufficio a Dublino, e lavora sia on-site che da remoto a seconda delle esigenze del progetto." },
+    "en": { "q": "Do you also work remotely?", "a": "Yes. The group has five offices in Italy and one in Dublin, and works both on-site and remotely depending on the project's needs." }
+  }
+]

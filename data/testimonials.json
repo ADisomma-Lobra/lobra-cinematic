@@ -1,0 +1,17 @@
+[
+  {
+    "id": "t1",
+    "it": { "quote": "Il team Lobra si è inserito nei nostri flussi come se lavorasse lì da anni. Le stime sono state rispettate, senza sorprese.", "name": "Direzione Customer Experience", "role": "Maison Verlaine · Fashion & Luxury" },
+    "en": { "quote": "The Lobra team fit into our workflows as if they'd worked there for years. Estimates were respected, no surprises.", "name": "Customer Experience Leadership", "role": "Maison Verlaine · Fashion & Luxury" }
+  },
+  {
+    "id": "t2",
+    "it": { "quote": "Non un fornitore, un team che si è preso il problema come fosse suo. È la differenza che cercavamo.", "name": "Direzione Operations", "role": "Nordvine Retail Group · Retail" },
+    "en": { "quote": "Not a vendor — a team that took the problem on as if it were their own. That's the difference we were looking for.", "name": "Operations Leadership", "role": "Nordvine Retail Group · Retail" }
+  },
+  {
+    "id": "t3",
+    "it": { "quote": "Finalmente un partner con cui parlare la stessa lingua tecnica, dal primo giorno di progetto.", "name": "CFO", "role": "Ferro & Calder Manufacturing" },
+    "en": { "quote": "Finally a partner who spoke the same technical language, from day one of the project.", "name": "CFO", "role": "Ferro & Calder Manufacturing" }
+  }
+]
