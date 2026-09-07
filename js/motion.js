@@ -15,7 +15,7 @@
   function initHeaderAndProgress() {
     const header = document.getElementById('site-header');
     const bar = document.getElementById('scroll-progress');
-    const darkSel = '.tools-scene, .industries-stage, .stats-band';
+    const darkSel = '.tools-scene, .industries-stage, .stats-band, .final-cta';
     function update() {
       const y = window.scrollY || document.documentElement.scrollTop;
       if (header) header.classList.toggle('is-scrolled', y > 8);
