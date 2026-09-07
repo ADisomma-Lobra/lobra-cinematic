@@ -158,14 +158,10 @@
     const mark = document.getElementById('tools-mark');
     const circle = document.getElementById('reveal-circle');
     const scrubCopy = document.getElementById('scrub-copy');
-    const video = document.getElementById('media-video');
     if (!scene || !circle) return;
 
     if (REDUCE || !HAS_GSAP || !window.ScrollTrigger || window.innerWidth <= 900) {
       bubbles.forEach((b) => { b.style.opacity = '1'; b.style.transform = 'none'; });
-      // no scroll to scrub against here — play it as a quiet ambient loop
-      // instead, but leave it fully static when the OS asks for less motion
-      if (video && !REDUCE) { video.autoplay = true; video.loop = true; video.play().catch(() => {}); }
       return;
     }
 
@@ -198,7 +194,7 @@
     ScrollTrigger.create({
       trigger: scene,
       start: 'top top',
-      end: () => '+=' + window.innerHeight * 3.2,
+      end: () => '+=' + window.innerHeight * 2.3,
       pin: true,
       scrub: 0.5,
       invalidateOnRefresh: true,
@@ -242,15 +238,6 @@
             gsap.set(w, { opacity: 0.16 + wp * 0.84 });
           });
         }
-
-        // the team video plays forward as you scroll through the whole time
-        // the photo/circle panel is visible (from the moment it starts
-        // opening through to the end of the word reveal), and reverses if
-        // you scroll back up — same scrub feel as everything else here
-        if (video && video.readyState >= 1 && !isNaN(video.duration)) {
-          const videoP = clamp((p - 0.40) / 0.60);
-          video.currentTime = video.duration * videoP;
-        }
       }
     });
   }
@@ -275,7 +262,7 @@
     ScrollTrigger.create({
       trigger: '.industries-stage',
       start: 'top top',
-      end: () => '+=' + window.innerHeight * rows.length * 0.7,
+      end: () => '+=' + window.innerHeight * rows.length * 0.52,
       pin: true,
       scrub: 0.5,
       invalidateOnRefresh: true,

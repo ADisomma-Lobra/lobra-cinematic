@@ -287,7 +287,6 @@ html.no-js .reveal{ opacity: 1; transform: none; }
 }
 .reveal-media{ position: absolute; inset: 0; width: 100vw; height: 100dvh; left: 50%; top: 50%; transform: translate(-50%,-50%); }
 .media-scene{ position: absolute; inset: 0; background: var(--ink); overflow: hidden; }
-.media-video{ position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
 /* same tint the photo fallback used, minus the image — the video sits under
    it; when there's no video the fallback below paints the image itself */
 .media-scene-overlay{
@@ -349,16 +348,21 @@ html.no-js .reveal{ opacity: 1; transform: none; }
 .industries-pin{ position: relative; }
 .industries-stage{ position: relative; min-height: 100dvh; display: flex; flex-direction: column; justify-content: center; overflow: hidden; background: var(--ink); color: #fff; }
 .industries-bg{ position: absolute; inset: 0; z-index: 0; }
-.industries-bg .tone{ position: absolute; inset: 0; opacity: 0; transition: opacity .6s var(--ease-out); }
+.industries-bg .tone{
+  position: absolute; inset: 0; opacity: 0; transition: opacity .6s var(--ease-out);
+  background-size: cover; background-position: center; /* covers render.js's inline
+    background-image (a Storyblok photo) too — without this it tiled at natural
+    size instead of filling the panel, since only two of the five tones had
+    their own background-size declared before */
+}
 .industries-bg .tone.is-active{ opacity: 1; }
-/* Fashion & Luxury, Retail, Financial Services keep an abstract on-brand gradient
-   (no matching reference photo); Manufacturing and Altri settori use real photos,
-   with the same gradient underneath so the row text stays legible either way */
-.tone-1{ background: linear-gradient(135deg, #3a0d10 0%, #6e0f13 35%, #b0242b 100%); }
-.tone-2{ background: linear-gradient(115deg, #0B0F14 0%, #2a1416 50%, #6e0f13 100%); }
-.tone-3{ background: url("../images/photos/sector-manufacturing.jpg"); background-size: cover; background-position: center; }
-.tone-4{ background: linear-gradient(160deg, #0B0F14 0%, #131922 60%, #1b232c 100%); }
-.tone-5{ background: url("../images/photos/sector-other.jpg"); background-size: cover; background-position: center; }
+/* fallback gradients, shown until/unless a sector has its own photo (set via
+   Storyblok, injected inline by render.js) */
+.tone-1{ background-image: linear-gradient(135deg, #3a0d10 0%, #6e0f13 35%, #b0242b 100%); }
+.tone-2{ background-image: linear-gradient(115deg, #0B0F14 0%, #2a1416 50%, #6e0f13 100%); }
+.tone-3{ background-image: url("../images/photos/sector-manufacturing.jpg"); }
+.tone-4{ background-image: linear-gradient(160deg, #0B0F14 0%, #131922 60%, #1b232c 100%); }
+.tone-5{ background-image: url("../images/photos/sector-other.jpg"); }
 .industries-bg::after{ content:''; position: absolute; inset: 0; background: linear-gradient(100deg, rgba(11,15,20,.88) 0%, rgba(11,15,20,.72) 45%, rgba(11,15,20,.5) 100%); z-index: 1; }
 /* flex items with auto cross-axis margins (our .container centering trick)
    don't stretch to fill — they shrink to content instead, per spec — so an

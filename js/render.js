@@ -74,39 +74,32 @@
         en: { quote: en.items[i].quote, name: en.items[i].name, role: en.items[i].role }
       })), 'testimonials');
   }
-  function getStoryblokMedia() {
+  function getStoryblokMediaPhoto() {
     return window.LobraCMS.getHome('it').then((body) => {
       const block = body && window.LobraCMS.findBlock(body, 'media_copy');
-      return {
-        photo: block && window.LobraCMS.assetUrl(block, 'photo'),
-        video: block && window.LobraCMS.assetUrl(block, 'video')
-      };
-    }).catch(() => ({ photo: null, video: null }));
+      return block && window.LobraCMS.assetUrl(block, 'photo');
+    }).catch(() => null);
   }
 
-  /* ---------- Act 3/4: team photo/video behind the circle reveal / scrub
-     copy. A video takes priority when Storyblok has one — motion.js scrubs
-     its currentTime to scroll position; otherwise falls back to a photo
-     (Storyblok's, or the CSS-declared local one if Storyblok has neither). ---------- */
+  /* ---------- Act 3/4: team photo behind the circle reveal / scrub copy —
+     same gradient stack as the CSS default, just swapping in the Storyblok
+     asset URL when available (falls back to the CSS-declared local photo
+     if Storyblok has neither). A scroll-scrubbed video was tried here and
+     removed — seeking a <video>'s currentTime every scroll tick is too
+     stutter-prone for a smooth feel, a static photo reads better. ---------- */
   function renderMediaPhoto() {
     const scenes = document.querySelectorAll('.media-scene');
     if (!scenes.length) return Promise.resolve();
-    return getStoryblokMedia().then(({ photo, video }) => {
-      if (video) {
-        const videoEl = document.getElementById('media-video');
-        if (videoEl) videoEl.src = video;
-        return;
-      }
-      if (photo) {
-        scenes.forEach((el) => {
-          el.classList.add('has-photo-fallback');
-          el.style.backgroundImage =
-            "radial-gradient(120% 100% at 15% 20%, rgba(252,81,88,.35), transparent 55%)," +
-            "radial-gradient(100% 90% at 85% 85%, rgba(255,255,255,.08), transparent 60%)," +
-            "linear-gradient(135deg, rgba(11,15,20,.72) 0%, rgba(27,35,44,.55) 55%, rgba(42,53,64,.45) 100%)," +
-            `url('${photo}')`;
-        });
-      }
+    return getStoryblokMediaPhoto().then((photo) => {
+      if (!photo) return;
+      scenes.forEach((el) => {
+        el.classList.add('has-photo-fallback');
+        el.style.backgroundImage =
+          "radial-gradient(120% 100% at 15% 20%, rgba(252,81,88,.35), transparent 55%)," +
+          "radial-gradient(100% 90% at 85% 85%, rgba(255,255,255,.08), transparent 60%)," +
+          "linear-gradient(135deg, rgba(11,15,20,.72) 0%, rgba(27,35,44,.55) 55%, rgba(42,53,64,.45) 100%)," +
+          `url('${photo}')`;
+      });
     });
   }
   const svgCache = {};
