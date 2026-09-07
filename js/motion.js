@@ -115,10 +115,10 @@
         const p = self.progress;
         const dive = clamp(p / 0.8);
         gsap.set(fishWrap, {
-          x: -window.innerWidth * 0.06 * dive,
-          y: window.innerHeight * 0.5 * dive,
-          scale: 1 - dive * 0.6,
-          rotation: 26 * dive,
+          x: -window.innerWidth * 0.3 * dive,
+          y: window.innerHeight * 0.95 * dive,
+          scale: 1 - dive * 0.87,
+          rotation: 34 * dive,
           opacity: 1 - clamp((p - 0.6) / 0.4)
         });
       }

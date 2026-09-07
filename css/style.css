@@ -223,16 +223,19 @@ html.no-js .reveal{ opacity: 1; transform: none; }
 @keyframes wavebg-r{ from{ background-position-x: -720px; } to{ background-position-x: 0; } }
 @media (prefers-reduced-motion: reduce){ .hero-waves .line{ animation: none !important; } }
 
-/* the fish: sits astride the topmost wave line, half above the water, half below */
-.hero-fish-wrap{ position: absolute; right: 8%; bottom: 40%; z-index: 2; width: clamp(64px, 9vw, 128px); }
+/* the fish: huge, peeking down from above the hero — only its lower half
+   visible on load, top edge cropped by the section's own overflow:hidden —
+   then dives (scroll-linked, motion.js) into the tools section, shrinking
+   as it goes */
+.hero-fish-wrap{ position: absolute; right: -4%; top: -14%; z-index: 2; width: clamp(320px, 46vw, 680px); }
 @media (max-width: 900px){
   /* at hero-title's normal width the fish sits clear of the text column —
-     on a narrow phone the column fills the screen and the fish lands right
-     behind the lede paragraph; pin it to the wave edge instead, out of the way */
-  .hero-fish-wrap{ right: 6%; bottom: 30%; width: 60px; }
+     on a narrow phone the column fills the screen, so it's pulled further
+     right and kept smaller to stay clear of the lede paragraph */
+  .hero-fish-wrap{ right: -10%; top: -8%; width: clamp(220px, 62vw, 380px); }
 }
-.hero-fish-wrap svg{ width: 100%; height: auto; filter: drop-shadow(0 10px 18px rgba(204,44,51,.28)); animation: peek-bob 3.6s ease-in-out infinite; transform-origin: 50% 50%; }
-@keyframes peek-bob{ 0%,100%{ transform: translateY(0) rotate(-3deg);} 50%{ transform: translateY(-7px) rotate(3deg);} }
+.hero-fish-wrap svg{ width: 100%; height: auto; filter: drop-shadow(0 22px 40px rgba(11,15,20,.22)); animation: peek-bob 4.4s ease-in-out infinite; transform-origin: 50% 50%; }
+@keyframes peek-bob{ 0%,100%{ transform: translateY(0) rotate(-2deg);} 50%{ transform: translateY(-16px) rotate(2deg);} }
 @media (prefers-reduced-motion: reduce){ .hero-fish-wrap svg{ animation: none; } }
 
 .scroll-cue{ position: absolute; bottom: var(--space-6); left: 50%; transform: translateX(-50%); z-index: 3; display:flex; flex-direction:column; align-items:center; gap:8px; font-family: var(--font-mono); font-size: 11px; color: var(--ink-faint); text-transform: uppercase; letter-spacing: .12em; }
