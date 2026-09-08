@@ -109,15 +109,16 @@
     const wrap = document.getElementById('floating-paths');
     const svg = wrap && wrap.querySelector('svg');
     if (!svg) return;
-    const COUNT = 30;
+    const COUNT = 50;
     const position = -1;
     const frag = document.createDocumentFragment();
     for (let i = 0; i < COUNT; i++) {
+      const t = i / COUNT; // 0..~1, keeps width/opacity range stable regardless of COUNT
       const d = `M-${380 - i * 5 * position} -${189 + i * 6}C-${380 - i * 5 * position} -${189 + i * 6} -${312 - i * 5 * position} ${216 - i * 6} ${152 - i * 5 * position} ${343 - i * 6}C${616 - i * 5 * position} ${470 - i * 6} ${684 - i * 5 * position} ${875 - i * 6} ${684 - i * 5 * position} ${875 - i * 6}`;
       const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
       path.setAttribute('d', d);
-      path.setAttribute('stroke-width', (1 + i * 0.05).toFixed(2)); // the viewBox is ~2x the original component's, so double the stroke to read the same
-      path.setAttribute('stroke-opacity', (0.05 + i * 0.012).toFixed(3));
+      path.setAttribute('stroke-width', (1 + t * 1.45).toFixed(2)); // the viewBox is ~2x the original component's, so double the stroke to read the same
+      path.setAttribute('stroke-opacity', (0.05 + t * 0.35).toFixed(3));
       frag.appendChild(path);
     }
     svg.appendChild(frag);
@@ -125,7 +126,7 @@
     Array.from(svg.querySelectorAll('path')).forEach((path) => {
       const len = path.getTotalLength();
       gsap.set(path, { strokeDasharray: len, strokeDashoffset: len });
-      gsap.to(path, { strokeDashoffset: -len, duration: 20 + Math.random() * 12, repeat: -1, ease: 'none' });
+      gsap.to(path, { strokeDashoffset: -len, duration: 8 + Math.random() * 6, repeat: -1, ease: 'none' });
     });
   }
 
