@@ -259,7 +259,7 @@
       return;
     }
 
-    ScrollTrigger.create({
+    const st = ScrollTrigger.create({
       trigger: '.industries-stage',
       start: 'top top',
       end: () => '+=' + window.innerHeight * rows.length * 0.52,
@@ -271,7 +271,16 @@
         setActive(idx);
       }
     });
-    rows.forEach((row, i) => row.addEventListener('click', () => setActive(i)));
+    // clicking a row only ever changed which row LOOKED active — the pin's
+    // own onUpdate is still driven by real scroll position, so the very next
+    // scroll tick overwrote the click and snapped back to whatever row the
+    // raw scroll progress said. Scroll to that row's own window instead, so
+    // the click and the scrub stay in sync from then on.
+    rows.forEach((row, i) => row.addEventListener('click', () => {
+      const p = (i + 0.5) / rows.length;
+      const y = st.start + p * (st.end - st.start);
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }));
   }
 
   /* ---------- ACT 7 — counters ---------- */

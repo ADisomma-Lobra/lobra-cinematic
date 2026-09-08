@@ -26,7 +26,10 @@
         </div>
         <a href="contatti.html" class="btn btn-primary btn-sm magnetic" data-i18n="nav.cta">Contattaci</a>
         <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="primary-nav" aria-label="Apri il menu">
-          <span></span>
+          <svg viewBox="0 0 24 24" width="21" height="21" aria-hidden="true">
+            <line class="bar bar-1" x1="4" y1="8" x2="20" y2="8" />
+            <line class="bar bar-2" x1="4" y1="16" x2="20" y2="16" />
+          </svg>
         </button>
       </div>
     </div>

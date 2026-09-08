@@ -146,13 +146,21 @@ section[id]{ scroll-margin-top: 84px; }
 .lang-switch button[aria-pressed="true"]{ background: var(--ink); color: #fff; }
 .site-header.is-on-dark .lang-switch button[aria-pressed="true"]{ background: #fff; color: var(--ink); }
 
-.nav-toggle{ display: none; align-items: center; justify-content: center; width: 42px; height: 42px; }
-.nav-toggle span, .nav-toggle span::before, .nav-toggle span::after{ content:''; display:block; width:20px; height:2px; background:var(--ink); position:relative; transition: transform var(--dur-fast) var(--ease-out), opacity var(--dur-fast) var(--ease-out), background var(--dur-fast); }
-.site-header.is-on-dark .nav-toggle span, .site-header.is-on-dark .nav-toggle span::before, .site-header.is-on-dark .nav-toggle span::after{ background: #fff; }
-.nav-toggle span::before{ position:absolute; top:-6px; } .nav-toggle span::after{ position:absolute; top:6px; }
-.nav-toggle[aria-expanded="true"] span{ background: transparent; }
-.nav-toggle[aria-expanded="true"] span::before{ transform: translateY(6px) rotate(45deg); background: var(--ink); }
-.nav-toggle[aria-expanded="true"] span::after{ transform: translateY(-6px) rotate(-45deg); background: var(--ink); }
+.nav-toggle{
+  display: none; align-items: center; justify-content: center; width: 40px; height: 40px;
+  border-radius: 50%; transition: background var(--dur-fast) var(--ease-out);
+}
+.nav-toggle:hover{ background: rgba(11,15,20,.06); }
+.site-header.is-on-dark .nav-toggle:hover{ background: rgba(255,255,255,.08); }
+.nav-toggle svg{ overflow: visible; }
+.nav-toggle .bar{
+  stroke: var(--ink); stroke-width: 1.6; stroke-linecap: round;
+  transform-box: fill-box; transform-origin: center;
+  transition: transform var(--dur-med) var(--ease-out), stroke var(--dur-fast) var(--ease-out);
+}
+.site-header.is-on-dark .nav-toggle .bar{ stroke: #fff; }
+.nav-toggle[aria-expanded="true"] .bar-1{ transform: translateY(4px) rotate(45deg); }
+.nav-toggle[aria-expanded="true"] .bar-2{ transform: translateY(-4px) rotate(-45deg); }
 
 @media (max-width: 1180px){
   .header-row{ display: flex; justify-content: space-between; }
