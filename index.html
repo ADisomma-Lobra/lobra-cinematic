@@ -59,6 +59,9 @@
          scrolling, still the same photo, a line of copy brightens in word by
          word. One continuous pin, one photo, never re-shown ============ -->
     <section class="tools-scene" id="strumenti">
+      <div class="floating-paths" id="floating-paths" aria-hidden="true">
+        <svg viewBox="-550 -400 1400 1300" fill="none" preserveAspectRatio="none"></svg>
+      </div>
       <div class="container">
         <span class="eyebrow" data-i18n="tools.eyebrow">Con chi costruiamo</span>
         <h2 class="h2" data-i18n="tools.title">Le tecnologie che guidano il nostro lavoro</h2>
@@ -278,6 +281,7 @@
       LobraMotion.initCursorFx();
       LobraMotion.initToolTiles();
       LobraMotion.initBubbleMotion();
+      LobraMotion.initFloatingPaths();
 
       dataReady.then(function () {
         LobraMotion.initReveals();

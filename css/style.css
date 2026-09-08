@@ -291,6 +291,15 @@ html.no-js .reveal{ opacity: 1; transform: none; }
    ========================================================================== */
 .tools-scene{ position: relative; min-height: 100dvh; background: var(--ink); color: var(--on-ink); display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; padding-block: var(--space-9); }
 .tools-scene .container{ position: relative; z-index: 2; text-align: center; }
+/* ambient "floating paths" behind the orbit — ported by hand from the
+   21st.dev / shadcn React+framer-motion component the client linked, since
+   this project has neither React nor framer-motion; same organic curve
+   family, generated and animated by initFloatingPaths() in motion.js
+   (SVG stroke-dashoffset standing in for framer-motion's pathOffset),
+   recoloured to the site's own crimson instead of their slate. */
+.floating-paths{ position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.floating-paths svg{ width: 100%; height: 100%; }
+.floating-paths path{ fill: none; stroke: var(--crimson); }
 .tools-scene .h2{ color: #fff; margin-top: var(--space-4); }
 .tools-orbit{ position: relative; width: min(78vw, 720px); aspect-ratio: 16/9; margin: var(--space-8) auto 0; }
 .tools-bubble{

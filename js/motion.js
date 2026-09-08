@@ -98,6 +98,37 @@
     io.observe(svg);
   }
 
+  /* ---------- ambient "floating paths" behind the tools orbit — a hand
+     port of the 21st.dev/shadcn React+framer-motion component the client
+     found (this project has no React/framer-motion, so no npm install:
+     motion here): same generated bezier-curve family, drawn once as real
+     SVG <path> elements, then looped with GSAP animating stroke-dashoffset
+     across each path's own measured length — the same "flowing line"
+     read framer-motion's pathOffset gives, without needing that library. ---------- */
+  function initFloatingPaths() {
+    const wrap = document.getElementById('floating-paths');
+    const svg = wrap && wrap.querySelector('svg');
+    if (!svg) return;
+    const COUNT = 30;
+    const position = -1;
+    const frag = document.createDocumentFragment();
+    for (let i = 0; i < COUNT; i++) {
+      const d = `M-${380 - i * 5 * position} -${189 + i * 6}C-${380 - i * 5 * position} -${189 + i * 6} -${312 - i * 5 * position} ${216 - i * 6} ${152 - i * 5 * position} ${343 - i * 6}C${616 - i * 5 * position} ${470 - i * 6} ${684 - i * 5 * position} ${875 - i * 6} ${684 - i * 5 * position} ${875 - i * 6}`;
+      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      path.setAttribute('d', d);
+      path.setAttribute('stroke-width', (1 + i * 0.05).toFixed(2)); // the viewBox is ~2x the original component's, so double the stroke to read the same
+      path.setAttribute('stroke-opacity', (0.05 + i * 0.012).toFixed(3));
+      frag.appendChild(path);
+    }
+    svg.appendChild(frag);
+    if (REDUCE || !HAS_GSAP) return; // drawn once, static — no animation to skip
+    Array.from(svg.querySelectorAll('path')).forEach((path) => {
+      const len = path.getTotalLength();
+      gsap.set(path, { strokeDasharray: len, strokeDashoffset: len });
+      gsap.to(path, { strokeDashoffset: -len, duration: 20 + Math.random() * 12, repeat: -1, ease: 'none' });
+    });
+  }
+
   /* ---------- partner bubbles: a little life on hover — the icon drifts
      toward the cursor inside its own circle (a magnetic pull confined to
      .bubble-inner, deliberately NOT the .tools-bubble element itself, which
@@ -577,7 +608,7 @@
   }
 
   window.LobraMotion = {
-    initHeaderAndProgress, initCursorFx, initReveals, initMagnetic, initTrustMark, initToolTiles, initBubbleMotion,
+    initHeaderAndProgress, initCursorFx, initReveals, initMagnetic, initTrustMark, initToolTiles, initBubbleMotion, initFloatingPaths,
     initHeroDive, initToolsReveal, initScrubCopy, initIndustries, initCounters
   };
 })();
