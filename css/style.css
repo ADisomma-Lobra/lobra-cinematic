@@ -595,3 +595,69 @@ html.no-js .reveal{ opacity: 1; transform: none; }
 .form-status.is-ok{ color: #1E7A3E; }
 .form-status.is-err{ color: var(--crimson-strong); }
 #contact-offices .office-card{ padding: var(--space-4) var(--space-5); }
+
+/* ==========================================================================
+   Tools bubble → tile overlay ("con chi costruiamo" section): clicking a
+   partner bubble morphs it into a full card, bendingspoons.com-style —
+   logo+name pinned top-right, an animated brand-coloured backdrop filling
+   the tile, tagline + CTA pinned bottom. Markup lives once in index.html;
+   LobraMotion.initToolTiles() drives the open/close FLIP animation.
+   ========================================================================== */
+.tools-bubble{ cursor: pointer; transition: transform var(--dur-fast) var(--ease-out); }
+.tools-bubble:hover, .tools-bubble:focus-visible{ transform: scale(1.08); }
+.tools-bubble:focus-visible{ outline: 2px solid #fff; outline-offset: 3px; }
+
+.bubble-tile-overlay{
+  position: fixed; inset: 0; z-index: 900; display: flex; align-items: center; justify-content: center;
+  padding: var(--space-6); opacity: 0; visibility: hidden; transition: opacity .25s var(--ease-out), visibility 0s linear .25s;
+}
+.bubble-tile-overlay.is-open{ opacity: 1; visibility: visible; transition: opacity .25s var(--ease-out); }
+.bubble-tile-backdrop{ position: absolute; inset: 0; background: rgba(6,8,11,.72); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+.bubble-tile-card{
+  position: relative; width: min(480px, 100%); aspect-ratio: 4/5; max-height: 86vh;
+  border-radius: var(--radius-lg); overflow: hidden; background: var(--ink);
+  box-shadow: 0 50px 100px -24px rgba(0,0,0,.65); transform-origin: 50% 50%;
+}
+.bubble-tile-visual{ position: absolute; inset: 0; overflow: hidden; }
+.bubble-tile-visual .blob{
+  position: absolute; border-radius: 50%; background: radial-gradient(circle, var(--brand, var(--crimson)) 0%, transparent 72%);
+  filter: blur(30px); opacity: .8; animation: blob-drift 9s ease-in-out infinite;
+}
+.bubble-tile-visual .blob-1{ width: 70%; aspect-ratio: 1; top: -10%; left: -15%; animation-duration: 10s; }
+.bubble-tile-visual .blob-2{ width: 55%; aspect-ratio: 1; bottom: -12%; right: -10%; animation-duration: 12s; animation-delay: -3s; }
+.bubble-tile-visual .blob-3{ width: 40%; aspect-ratio: 1; top: 38%; left: 30%; animation-duration: 8s; animation-delay: -5s; opacity: .55; }
+@keyframes blob-drift{
+  0%,100%{ transform: translate(0,0) scale(1); }
+  33%{ transform: translate(6%,-4%) scale(1.08); }
+  66%{ transform: translate(-4%,5%) scale(0.96); }
+}
+.bubble-tile-close{
+  position: absolute; top: var(--space-4); left: var(--space-4); z-index: 3; width: 34px; height: 34px;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center; border: none; cursor: pointer;
+  background: rgba(255,255,255,.14); color: #fff; backdrop-filter: blur(6px); transition: background var(--dur-fast) var(--ease-out);
+}
+.bubble-tile-close:hover{ background: rgba(255,255,255,.26); }
+.bubble-tile-head{
+  position: absolute; top: var(--space-5); right: var(--space-5); z-index: 3; display: flex; align-items: center;
+  gap: 10px; max-width: 68%;
+}
+.bubble-tile-logo{
+  flex-shrink: 0; width: 34px; height: 34px; border-radius: 50%; background: #fff; color: var(--ink);
+  display: flex; align-items: center; justify-content: center; padding: 7px; box-shadow: 0 8px 18px -8px rgba(0,0,0,.5);
+}
+.bubble-tile-logo svg{ width: 100%; height: 100%; fill: currentColor; }
+.bubble-tile-name{ font-family: var(--font-display); font-weight: 600; font-size: 15px; color: #fff; text-align: right; line-height: 1.25; }
+.bubble-tile-foot{
+  position: absolute; left: 0; right: 0; bottom: 0; z-index: 3; padding: var(--space-8) var(--space-5) var(--space-5);
+  background: linear-gradient(180deg, transparent 0%, rgba(6,8,11,.55) 40%, rgba(6,8,11,.92) 100%);
+}
+.bubble-tile-tagline{ color: rgba(255,255,255,.85); font-size: 15px; line-height: 1.5; max-width: 40ch; }
+.bubble-tile-cta{ margin-top: var(--space-4); display: inline-flex; }
+
+@media (max-width: 640px){
+  .bubble-tile-card{ width: 100%; aspect-ratio: auto; height: min(640px, 88vh); }
+}
+@media (prefers-reduced-motion: reduce){
+  .bubble-tile-visual .blob{ animation: none; }
+  .tools-bubble:hover{ transform: none; }
+}

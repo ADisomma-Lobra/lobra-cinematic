@@ -98,6 +98,102 @@
     io.observe(svg);
   }
 
+  /* ---------- partner bubble → tile overlay (bendingspoons.com-inspired):
+     click a bubble in "con chi costruiamo" and it morphs — FLIP-style, from
+     its own on-screen circle — into a full card with logo+name top-right,
+     an animated brand-coloured backdrop, and a CTA to that partner's page.
+     Delegated on #tools-bubbles so it keeps working after renderTools()
+     (re)paints the bubbles; independent of the section's own pinned
+     scroll-scrub, which only ever reads/writes the bubbles' transform. ---------- */
+  function initToolTiles() {
+    const overlay = document.getElementById('bubble-tile-overlay');
+    const wrap = document.getElementById('tools-bubbles');
+    if (!overlay || !wrap) return;
+    const card = document.getElementById('bubble-tile-card');
+    const logoEl = document.getElementById('bubble-tile-logo');
+    const nameEl = document.getElementById('bubble-tile-name');
+    const taglineEl = document.getElementById('bubble-tile-tagline');
+    const ctaEl = document.getElementById('bubble-tile-cta');
+    let lastTrigger = null;
+    let lastRect = null;
+
+    function contentEls() { return [logoEl, nameEl, taglineEl, ctaEl]; }
+
+    function openTile(bubble) {
+      lastTrigger = bubble;
+      lastRect = bubble.getBoundingClientRect();
+
+      const lang = window.LOBRA_LANG || 'it';
+      logoEl.innerHTML = bubble.innerHTML;
+      nameEl.textContent = bubble.getAttribute('data-name') || '';
+      taglineEl.textContent = bubble.getAttribute(lang === 'en' ? 'data-tagline-en' : 'data-tagline-it') || '';
+      ctaEl.textContent = lang === 'en' ? 'Learn more' : 'Scopri di più';
+      ctaEl.href = `tecnologia.html?v=${encodeURIComponent(bubble.getAttribute('data-slug') || '')}`;
+      card.style.setProperty('--brand', bubble.getAttribute('data-brand') || '');
+
+      overlay.classList.add('is-open');
+      overlay.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      overlay.querySelector('.bubble-tile-close').focus();
+
+      if (REDUCE || !HAS_GSAP) return;
+      const endRect = card.getBoundingClientRect();
+      const scaleX = lastRect.width / endRect.width;
+      const scaleY = lastRect.height / endRect.height;
+      const dx = (lastRect.left + lastRect.width / 2) - (endRect.left + endRect.width / 2);
+      const dy = (lastRect.top + lastRect.height / 2) - (endRect.top + endRect.height / 2);
+      gsap.set(contentEls(), { opacity: 0 });
+      gsap.fromTo(card,
+        { x: dx, y: dy, scaleX, scaleY, borderRadius: '50%' },
+        { x: 0, y: 0, scaleX: 1, scaleY: 1, borderRadius: '28px', duration: 0.6, ease: 'power3.out',
+          onComplete: () => gsap.to(contentEls(), { opacity: 1, duration: 0.35, stagger: 0.05, ease: 'power1.out' })
+        }
+      );
+    }
+
+    function closeTile() {
+      overlay.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      const trigger = lastTrigger;
+      const rect = lastRect;
+      lastTrigger = null;
+
+      if (REDUCE || !HAS_GSAP || !rect) {
+        overlay.classList.remove('is-open');
+        if (trigger) trigger.focus();
+        return;
+      }
+      const endRect = card.getBoundingClientRect();
+      const scaleX = rect.width / endRect.width;
+      const scaleY = rect.height / endRect.height;
+      const dx = (rect.left + rect.width / 2) - (endRect.left + endRect.width / 2);
+      const dy = (rect.top + rect.height / 2) - (endRect.top + endRect.height / 2);
+      gsap.to(contentEls(), { opacity: 0, duration: 0.15 });
+      gsap.to(card, {
+        x: dx, y: dy, scaleX, scaleY, borderRadius: '50%', duration: 0.45, ease: 'power2.in',
+        onComplete: () => {
+          overlay.classList.remove('is-open');
+          gsap.set(card, { x: 0, y: 0, scaleX: 1, scaleY: 1, borderRadius: '28px' });
+          if (trigger) trigger.focus();
+        }
+      });
+    }
+
+    wrap.addEventListener('click', (e) => {
+      const bubble = e.target.closest('.tools-bubble');
+      if (bubble) openTile(bubble);
+    });
+    wrap.addEventListener('keydown', (e) => {
+      if (e.key !== 'Enter' && e.key !== ' ') return;
+      const bubble = e.target.closest('.tools-bubble');
+      if (bubble) { e.preventDefault(); openTile(bubble); }
+    });
+    overlay.querySelectorAll('[data-tile-close]').forEach((el) => el.addEventListener('click', closeTile));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && overlay.classList.contains('is-open')) closeTile();
+    });
+  }
+
   /* ---------- magnetic buttons ---------- */
   function initMagnetic() {
     if (REDUCE || !HAS_GSAP || window.matchMedia('(hover: none)').matches) return;
@@ -339,7 +435,7 @@
   }
 
   window.LobraMotion = {
-    initHeaderAndProgress, initCursorFx, initReveals, initMagnetic, initTrustMark,
+    initHeaderAndProgress, initCursorFx, initReveals, initMagnetic, initTrustMark, initToolTiles,
     initHeroDive, initToolsReveal, initScrubCopy, initIndustries, initCounters
   };
 })();

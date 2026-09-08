@@ -221,6 +221,31 @@
 
   <footer id="site-footer" class="site-footer"></footer>
 
+  <!-- partner bubble → tile overlay: populated and animated by
+       LobraMotion.initToolTiles() in motion.js, opened from a click on any
+       .tools-bubble in the "Con chi costruiamo" section -->
+  <div class="bubble-tile-overlay" id="bubble-tile-overlay" aria-hidden="true">
+    <div class="bubble-tile-backdrop" data-tile-close></div>
+    <div class="bubble-tile-card" id="bubble-tile-card" role="dialog" aria-modal="true" aria-labelledby="bubble-tile-name">
+      <div class="bubble-tile-visual" id="bubble-tile-visual" aria-hidden="true">
+        <span class="blob blob-1"></span>
+        <span class="blob blob-2"></span>
+        <span class="blob blob-3"></span>
+      </div>
+      <button class="bubble-tile-close" type="button" data-tile-close aria-label="Chiudi">
+        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><line x1="5" y1="5" x2="19" y2="19" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><line x1="19" y1="5" x2="5" y2="19" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </button>
+      <div class="bubble-tile-head">
+        <span class="bubble-tile-logo" id="bubble-tile-logo"></span>
+        <span class="bubble-tile-name" id="bubble-tile-name"></span>
+      </div>
+      <div class="bubble-tile-foot">
+        <p class="bubble-tile-tagline" id="bubble-tile-tagline"></p>
+        <a class="btn btn-primary bubble-tile-cta" id="bubble-tile-cta" href="#"></a>
+      </div>
+    </div>
+  </div>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="js/partials.js"></script>
@@ -251,6 +276,7 @@
 
       LobraMotion.initHeaderAndProgress();
       LobraMotion.initCursorFx();
+      LobraMotion.initToolTiles();
 
       dataReady.then(function () {
         LobraMotion.initReveals();

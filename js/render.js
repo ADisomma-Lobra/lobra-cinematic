@@ -131,17 +131,30 @@
     { top: '58%', left: '92%' }, { top: '80%', left: '62%' }, { top: '82%', left: '18%' },
     { top: '46%', left: '0%' }
   ];
+  const GENERIC_TAGLINE = { it: 'Partner tecnologico di Lobra.', en: "Lobra's technology partner." };
   function renderTools(containerId) {
     const el = document.getElementById(containerId);
     if (!el) return Promise.resolve();
-    return getStoryblokPartners().then((list) =>
-      Promise.all(list.map((p) => getBrandSvg(p.slug).then((svg) => ({ ...p, svg })))).then((withSvg) => {
+    return Promise.all([getStoryblokPartners(), getStoryblokVendorHub().catch(() => [])]).then(([list, hub]) =>
+      Promise.all(list.map((p) => getBrandSvg(p.slug).then((svg) => {
+        const h = hub.find((v) => v.slug === p.slug);
+        return {
+          ...p, svg,
+          taglineIt: (h && h.it && h.it.tagline) || GENERIC_TAGLINE.it,
+          taglineEn: (h && h.en && h.en.tagline) || GENERIC_TAGLINE.en
+        };
+      }))).then((withSvg) => {
         el.innerHTML = withSvg
           .map((p, i) => {
             const pos = BUBBLE_POS[i % BUBBLE_POS.length];
-            return `<div class="tools-bubble" data-bubble style="top:${pos.top};left:${pos.left};animation-delay:${(i * 0.35).toFixed(2)}s;color:${esc(p.brandColor)}" title="${esc(p.name)}">${p.svg}</div>`;
+            return `<div class="tools-bubble" data-bubble tabindex="0" role="button"
+              aria-label="${esc(p.name)}" title="${esc(p.name)}"
+              style="top:${pos.top};left:${pos.left};animation-delay:${(i * 0.35).toFixed(2)}s;color:${esc(p.brandColor)}"
+              data-slug="${esc(p.slug)}" data-name="${esc(p.name)}" data-brand="${esc(p.brandColor)}"
+              data-tagline-it="${esc(p.taglineIt)}" data-tagline-en="${esc(p.taglineEn)}">${p.svg}</div>`;
           })
           .join('');
+        document.dispatchEvent(new CustomEvent('lobra:tools-ready'));
       })
     );
   }
@@ -526,6 +539,46 @@
         paint();
         document.addEventListener('lobra:lang-changed', paint);
       });
+    }).catch(() => renderVendorComingSoon(root, slug));
+  }
+
+  // a partner bubble exists (data/partners.json) but has no story and no
+  // local vendor-<slug>.json yet — instead of the page staying blank on an
+  // unhandled rejection, show a clean placeholder until real content lands
+  function renderVendorComingSoon(root, slug) {
+    return getData('partners').catch(() => []).then((partners) => {
+      const p = partners.find((x) => x.slug === slug);
+      const name = p ? p.name : slug.charAt(0).toUpperCase() + slug.slice(1);
+      const paint = () => {
+        const lang = getLang();
+        document.title = `${name} — Lobra`;
+        root.innerHTML = `
+          <header class="page-hero">
+            <div class="container">
+              <nav class="mono text-muted" style="font-size:13px;margin-bottom:var(--space-4)">
+                <a href="tecnologie.html">${lang === 'en' ? 'Technologies & Partners' : 'Tecnologie & Partner'}</a> / ${esc(name)}
+              </nav>
+              <span class="eyebrow">${lang === 'en' ? 'Technology partner' : 'Partner tecnologico'}</span>
+              <h1 class="h1" style="margin-top:14px">${esc(name)}</h1>
+              <p class="lede" style="margin-top:16px">${lang === 'en' ? 'The dedicated page for this partner is on its way.' : 'La pagina dedicata a questo partner è in arrivo.'}</p>
+            </div>
+          </header>
+          <section class="section-tight">
+            <div class="container">
+              <div class="cta-band">
+                <div class="cta-band-grid">
+                  <div>
+                    <h2 class="h3">${lang === 'en' ? `Talk to us about ${name}` : `Parliamo del tuo progetto ${name}`}</h2>
+                    <p style="margin-top:8px">${lang === 'en' ? 'Tell us where you are today — we will tell you what it takes to move forward.' : 'Raccontaci a che punto sei: ti diciamo cosa serve per andare avanti.'}</p>
+                  </div>
+                  <a class="btn btn-primary" href="contatti.html">${lang === 'en' ? 'Contact us' : 'Contattaci'}</a>
+                </div>
+              </div>
+            </div>
+          </section>`;
+      };
+      paint();
+      document.addEventListener('lobra:lang-changed', paint);
     });
   }
 
