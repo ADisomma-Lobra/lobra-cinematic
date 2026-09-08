@@ -6,17 +6,17 @@
 (function () {
   const HEADER_HTML = `
     <div class="container header-row">
-      <a href="#top" class="brand" aria-label="Lobra — home">
+      <a href="index.html" class="brand" aria-label="Lobra — home">
         <img src="images/lobra-logo.svg" alt="Lobra" width="110" height="27" />
       </a>
       <nav class="primary-nav" id="primary-nav" aria-label="Navigazione principale">
         <ul>
-          <li><a href="#strumenti" data-i18n="nav.tools">Tecnologie</a></li>
-          <li><a href="#chi-siamo" data-i18n="nav.journey">Chi siamo</a></li>
-          <li><a href="#settori" data-i18n="nav.sectors">Settori</a></li>
-          <li><a href="#storie" data-i18n="nav.stories">Storie</a></li>
-          <li><a href="#faq" data-i18n="nav.faq">FAQ</a></li>
-          <li><a href="#contatti" data-i18n="nav.contact">Contatti</a></li>
+          <li><a href="servizi.html" data-i18n="nav.services">Servizi</a></li>
+          <li><a href="tecnologie.html" data-i18n="nav.tools">Tecnologie</a></li>
+          <li><a href="chi-siamo.html" data-i18n="nav.journey">Chi siamo</a></li>
+          <li><a href="settori.html" data-i18n="nav.sectors">Settori</a></li>
+          <li><a href="index.html#faq" data-i18n="nav.faq">FAQ</a></li>
+          <li><a href="contatti.html" data-i18n="nav.contact">Contatti</a></li>
         </ul>
       </nav>
       <div class="header-actions">
@@ -24,7 +24,7 @@
           <button type="button" data-lang-btn="it" aria-pressed="true">IT</button>
           <button type="button" data-lang-btn="en" aria-pressed="false">EN</button>
         </div>
-        <a href="#contatti" class="btn btn-primary btn-sm magnetic" data-i18n="nav.cta">Contattaci</a>
+        <a href="contatti.html" class="btn btn-primary btn-sm magnetic" data-i18n="nav.cta">Contattaci</a>
         <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="primary-nav" aria-label="Apri il menu">
           <span></span>
         </button>
@@ -41,25 +41,25 @@
       <div class="footer-col">
         <h4 data-i18n="footer.col.nav">Naviga</h4>
         <ul>
-          <li><a href="#strumenti" data-i18n="nav.tools">Tecnologie</a></li>
-          <li><a href="#settori" data-i18n="nav.sectors">Settori</a></li>
-          <li><a href="#storie" data-i18n="nav.stories">Storie</a></li>
-          <li><a href="#faq" data-i18n="nav.faq">FAQ</a></li>
-          <li><a href="#contatti" data-i18n="nav.contact">Contatti</a></li>
+          <li><a href="servizi.html" data-i18n="nav.services">Servizi</a></li>
+          <li><a href="tecnologie.html" data-i18n="nav.tools">Tecnologie</a></li>
+          <li><a href="settori.html" data-i18n="nav.sectors">Settori</a></li>
+          <li><a href="index.html#faq" data-i18n="nav.faq">FAQ</a></li>
+          <li><a href="contatti.html" data-i18n="nav.contact">Contatti</a></li>
         </ul>
       </div>
       <div class="footer-col">
         <h4 data-i18n="footer.col.group">Gruppo Lobra</h4>
         <ul>
-          <li><span>Lobra</span></li>
-          <li><span>Lobra Futura</span></li>
-          <li><span>Athenea</span></li>
+          <li><a href="chi-siamo.html">Lobra</a></li>
+          <li><a href="chi-siamo.html">Lobra Futura</a></li>
+          <li><a href="chi-siamo.html">Athenea</a></li>
         </ul>
       </div>
     </div>
     <div class="container footer-bottom">
       <span>&copy; <span data-year></span> <span data-i18n="footer.copyright">Lobra S.r.l. Tutti i diritti riservati.</span></span>
-      <span class="mono" data-i18n="footer.note">Concept cinematico — Home page, versione dimostrativa.</span>
+      <span class="mono" data-i18n="footer.note">Concept cinematico — versione dimostrativa.</span>
     </div>
   `;
 

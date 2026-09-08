@@ -1,0 +1,58 @@
+[
+  {
+    "id": "cx",
+    "icon": "cx",
+    "featured": true,
+    "it": { "title": "Customer Experience & Customer Engagement", "summary": "Progettiamo i percorsi con cui i vostri clienti vi vivono: dal primo contatto al servizio post-vendita, su ogni canale." },
+    "en": { "title": "Customer Experience & Customer Engagement", "summary": "We design how your customers experience you: from first contact to after-sales service, across every channel." }
+  },
+  {
+    "id": "integration",
+    "icon": "integration",
+    "featured": true,
+    "it": { "title": "System Integration & Data Integration", "summary": "Colleghiamo sistemi, processi e fonti dati diverse in un'unica architettura coerente e governabile." },
+    "en": { "title": "System Integration & Data Integration", "summary": "We connect disparate systems, processes and data sources into one coherent, governable architecture." }
+  },
+  {
+    "id": "cloud-data",
+    "icon": "cloud-data",
+    "featured": true,
+    "it": { "title": "Data Management / Cloud & Data", "summary": "Governance, qualità e piattaforme cloud per rendere i dati un asset affidabile, non un problema." },
+    "en": { "title": "Data Management / Cloud & Data", "summary": "Governance, quality and cloud platforms that turn data into a reliable asset, not a liability." }
+  },
+  {
+    "id": "consulting",
+    "icon": "consulting",
+    "featured": true,
+    "it": { "title": "IT Consulting", "summary": "Advisory tecnologico e organizzativo per orientare investimenti, roadmap e scelte architetturali." },
+    "en": { "title": "IT Consulting", "summary": "Technology and organisational advisory to steer investments, roadmaps and architecture choices." }
+  },
+  {
+    "id": "maintenance",
+    "icon": "maintenance",
+    "featured": false,
+    "it": { "title": "Application Maintenance & Support", "summary": "Presidio continuativo delle applicazioni critiche, con SLA chiari e miglioramento continuo." },
+    "en": { "title": "Application Maintenance & Support", "summary": "Ongoing care of business-critical applications, with clear SLAs and continuous improvement." }
+  },
+  {
+    "id": "billing",
+    "icon": "billing",
+    "featured": false,
+    "it": { "title": "Billing & Revenue Management", "summary": "Piattaforme e processi di fatturazione e monetizzazione per modelli di business complessi e ricorrenti." },
+    "en": { "title": "Billing & Revenue Management", "summary": "Billing and monetisation platforms and processes for complex, recurring business models." }
+  },
+  {
+    "id": "digital-core",
+    "icon": "digital-core",
+    "featured": false,
+    "it": { "title": "Digital Core", "summary": "Il nucleo ERP e applicativo su cui costruiamo tutto il resto: solido, integrato, pronto a evolvere." },
+    "en": { "title": "Digital Core", "summary": "The ERP and application core everything else is built on: solid, integrated, ready to evolve." }
+  },
+  {
+    "id": "ai",
+    "icon": "ai",
+    "featured": false,
+    "it": { "title": "AI Innovation", "summary": "Agentforce e soluzioni AI-powered per automatizzare processi e potenziare le persone, non sostituirle." },
+    "en": { "title": "AI Innovation", "summary": "Agentforce and AI-powered solutions that automate processes and empower people, not replace them." }
+  }
+]

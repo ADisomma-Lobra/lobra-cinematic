@@ -1,0 +1,30 @@
+{
+  "meta": { "title": "About us — Gruppo Lobra" },
+  "nav": { "services": "Services", "tools": "Technologies", "journey": "About us", "sectors": "Industries", "stories": "Stories", "faq": "FAQ", "contact": "Contact", "cta": "Contact us" },
+  "hero": {
+    "eyebrow": "About us",
+    "title": "One group, three companies, one goal: helping you move better.",
+    "lede": "Gruppo Lobra brings together different expertise — Customer Experience, Microsoft, SAP — under one approach: people-first and results-driven."
+  },
+  "identity": {
+    "eyebrow": "Our identity",
+    "title": "People first",
+    "body1": "This is where every project starts: with people, not with technology. Our DNA is a people-first approach that puts the people who work with and for our clients at the centre.",
+    "body2": "We believe complexity is tackled with method, not shortcuts. That's why we build long-term relationships, not one-off projects."
+  },
+  "companies": { "eyebrow": "Our companies", "title": "Three companies, one integrated ecosystem" },
+  "numbers": { "eyebrow": "The numbers", "title": "Gruppo Lobra in figures" },
+  "offices": { "eyebrow": "Our offices", "title": "Where we work, every day", "lede": "Five offices in Italy and one international office in Dublin." },
+  "care": {
+    "eyebrow": "Social impact",
+    "title": "Lobra gives back",
+    "lede": "We believe a company should give value back to the community it operates in. That's why we support organisations that work every day for those who need it most.",
+    "partnersTitle": "Who we support"
+  },
+  "footer": {
+    "tagline": "Since 2016 we've turned complexity into direction.",
+    "col": { "nav": "Navigate", "group": "Gruppo Lobra" },
+    "copyright": "Lobra S.r.l. All rights reserved.",
+    "note": "Cinematic concept — demonstration version."
+  }
+}

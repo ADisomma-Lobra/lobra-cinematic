@@ -1,0 +1,22 @@
+{
+  "it": {
+    "name": "Odoo",
+    "tagline": "Un ERP unico, modulare, per gestire l'azienda end-to-end.",
+    "intro": "Implementiamo Odoo come piattaforma gestionale unificata: dall'amministrazione alla supply chain, dalle risorse umane al servizio clienti.",
+    "groups": [
+      { "title": "Gestione & Persone", "items": ["Finance & Administration", "Human Resources"] },
+      { "title": "Vendite & Operations", "items": ["Customer & Revenue Management", "Operations & Supply Chain", "Customer Service"] },
+      { "title": "Delivery & Piattaforma", "items": ["Project & Service Delivery", "Platform & Integration", "Documents & Asset Management", "Analytics & Decision Support"] }
+    ]
+  },
+  "en": {
+    "name": "Odoo",
+    "tagline": "One modular ERP to run the whole business end-to-end.",
+    "intro": "We implement Odoo as a unified management platform: from administration to supply chain, from HR to customer service.",
+    "groups": [
+      { "title": "Management & People", "items": ["Finance & Administration", "Human Resources"] },
+      { "title": "Sales & Operations", "items": ["Customer & Revenue Management", "Operations & Supply Chain", "Customer Service"] },
+      { "title": "Delivery & Platform", "items": ["Project & Service Delivery", "Platform & Integration", "Documents & Asset Management", "Analytics & Decision Support"] }
+    ]
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "meta": { "title": "Services — Gruppo Lobra" },
+  "nav": { "services": "Services", "tools": "Technologies", "journey": "About us", "sectors": "Industries", "stories": "Stories", "faq": "FAQ", "contact": "Contact", "cta": "Contact us" },
+  "hero": {
+    "eyebrow": "Services",
+    "title": "What we do, in practice",
+    "lede": "Eight areas of expertise, one goal: making what's complex simpler. From customer experience to artificial intelligence, we work across your systems' entire lifecycle."
+  },
+  "cta": {
+    "title": "Not sure where to start?",
+    "lede": "Tell us about your context — we'll help you figure out which area to tackle first.",
+    "action": "Contact us"
+  },
+  "footer": {
+    "tagline": "Since 2016 we've turned complexity into direction.",
+    "col": { "nav": "Navigate", "group": "Gruppo Lobra" },
+    "copyright": "Lobra S.r.l. All rights reserved.",
+    "note": "Cinematic concept — demonstration version."
+  }
+}

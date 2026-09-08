@@ -1,0 +1,21 @@
+{
+  "meta": { "title": "Industries & Success Stories — Gruppo Lobra" },
+  "nav": { "services": "Services", "tools": "Technologies", "journey": "About us", "sectors": "Industries", "stories": "Stories", "faq": "FAQ", "contact": "Contact", "cta": "Contact us" },
+  "hero": {
+    "eyebrow": "Industries",
+    "title": "Where we deliver our results",
+    "lede": "We work in industries where customer relationships, attention to detail and process complexity make the difference."
+  },
+  "stories": {
+    "eyebrow": "Success stories",
+    "title": "A selection of delivered projects",
+    "lede": "A selection of engagements in the Fashion & Luxury industry.",
+    "disclaimer": "Illustrative content: pending confirmation from individual clients before publication."
+  },
+  "footer": {
+    "tagline": "Since 2016 we've turned complexity into direction.",
+    "col": { "nav": "Navigate", "group": "Gruppo Lobra" },
+    "copyright": "Lobra S.r.l. All rights reserved.",
+    "note": "Cinematic concept — demonstration version."
+  }
+}

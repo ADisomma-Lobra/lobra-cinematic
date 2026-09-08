@@ -1,0 +1,21 @@
+{
+  "meta": { "title": "Settori & Success Stories — Gruppo Lobra" },
+  "nav": { "services": "Servizi", "tools": "Tecnologie", "journey": "Chi siamo", "sectors": "Settori", "stories": "Storie", "faq": "FAQ", "contact": "Contatti", "cta": "Contattaci" },
+  "hero": {
+    "eyebrow": "Settori",
+    "title": "Dove portiamo i nostri risultati",
+    "lede": "Lavoriamo in settori in cui la relazione con il cliente, il dettaglio e la complessità dei processi fanno la differenza."
+  },
+  "stories": {
+    "eyebrow": "Success stories",
+    "title": "Alcuni dei progetti realizzati",
+    "lede": "Una selezione di collaborazioni nel settore Fashion & Luxury.",
+    "disclaimer": "Contenuti a scopo illustrativo: in attesa di conferma dei singoli clienti prima della pubblicazione."
+  },
+  "footer": {
+    "tagline": "Dal 2016 trasformiamo la complessità in direzione.",
+    "col": { "nav": "Naviga", "group": "Gruppo Lobra" },
+    "copyright": "Lobra S.r.l. Tutti i diritti riservati.",
+    "note": "Concept cinematico — versione dimostrativa."
+  }
+}

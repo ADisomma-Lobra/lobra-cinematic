@@ -1,0 +1,30 @@
+[
+  {
+    "id": "case-01",
+    "customer": "Bulgari",
+    "sector": "fashion-luxury",
+    "it": { "solution": "Customer Experience & Service Cloud", "summary": "Piattaforma di servizio clienti unificata tra boutique, e-commerce e contact center." },
+    "en": { "solution": "Customer Experience & Service Cloud", "summary": "Unified customer service platform across boutiques, e-commerce and contact centre." }
+  },
+  {
+    "id": "case-02",
+    "customer": "Trussardi",
+    "sector": "fashion-luxury",
+    "it": { "solution": "Data Integration & Cloud", "summary": "Integrazione dei dati cliente tra canali retail e digital per una vista unica del consumatore." },
+    "en": { "solution": "Data Integration & Cloud", "summary": "Customer data integration across retail and digital channels for a single customer view." }
+  },
+  {
+    "id": "case-03",
+    "customer": "Fendi",
+    "sector": "fashion-luxury",
+    "it": { "solution": "Digital Core & System Integration", "summary": "Consolidamento dei processi core su un'unica piattaforma integrata, dal prodotto alla vendita." },
+    "en": { "solution": "Digital Core & System Integration", "summary": "Consolidation of core processes onto one integrated platform, from product to sale." }
+  },
+  {
+    "id": "case-04",
+    "customer": "Stella McCartney",
+    "sector": "fashion-luxury",
+    "it": { "solution": "Customer Engagement", "summary": "Programmi di engagement e fidelizzazione costruiti su una piattaforma cliente integrata." },
+    "en": { "solution": "Customer Engagement", "summary": "Engagement and loyalty programmes built on an integrated customer platform." }
+  }
+]

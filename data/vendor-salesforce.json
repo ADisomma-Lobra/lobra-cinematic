@@ -1,0 +1,24 @@
+{
+  "it": {
+    "name": "Salesforce",
+    "tagline": "La piattaforma su cui costruiamo customer experience e AI agentiva.",
+    "intro": "Come partner Salesforce lavoriamo sull'intero ecosistema: dalle Clouds di vendita e servizio, all'integrazione dati, fino ai nuovi agenti AI di Agentforce.",
+    "groups": [
+      { "title": "Agentforce", "items": ["Agent & Prompt Builder", "Autonomous & Assistant Agents", "Einstein Trust Layer"] },
+      { "title": "Data Cloud, Platform & Data", "items": ["Heroku", "OmniStudio", "Slack", "Privacy Center"] },
+      { "title": "Salesforce Clouds", "items": ["Marketing Cloud", "Commerce Cloud", "Sales Cloud", "Service Cloud"] },
+      { "title": "Integrazione & Analytics", "items": ["MuleSoft", "CRM Analytics", "Tableau"] }
+    ]
+  },
+  "en": {
+    "name": "Salesforce",
+    "tagline": "The platform we build customer experience and agentic AI on.",
+    "intro": "As a Salesforce partner we work across the whole ecosystem: from sales and service Clouds to data integration, through to Agentforce's new AI agents.",
+    "groups": [
+      { "title": "Agentforce", "items": ["Agent & Prompt Builder", "Autonomous & Assistant Agents", "Einstein Trust Layer"] },
+      { "title": "Data Cloud, Platform & Data", "items": ["Heroku", "OmniStudio", "Slack", "Privacy Center"] },
+      { "title": "Salesforce Clouds", "items": ["Marketing Cloud", "Commerce Cloud", "Sales Cloud", "Service Cloud"] },
+      { "title": "Integration & Analytics", "items": ["MuleSoft", "CRM Analytics", "Tableau"] }
+    ]
+  }
+}

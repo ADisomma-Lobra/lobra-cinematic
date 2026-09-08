@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title data-i18n="meta.title">Contatti — Gruppo Lobra</title>
+  <meta name="description" content="Contatta il Gruppo Lobra: raccontaci il tuo progetto, ti risponderemo al più presto." />
+  <meta name="robots" content="noindex" />
+  <link rel="icon" href="images/favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <noscript><style>.reveal{opacity:1!important;transform:none!important;}</style></noscript>
+</head>
+<body data-page="contact">
+  <div id="cursor-fx" aria-hidden="true"></div>
+  <div class="scroll-progress" id="scroll-progress"></div>
+  <a class="skip-link" href="#main">Vai al contenuto principale</a>
+  <header id="site-header" class="site-header"></header>
+
+  <main id="main">
+    <header class="page-hero">
+      <div class="container">
+        <span class="eyebrow" data-i18n="hero.eyebrow">Contatti</span>
+        <h1 class="h1 reveal" style="margin-top:16px" data-i18n="hero.title">Parliamo del tuo progetto</h1>
+        <p class="lede reveal" style="margin-top:18px" data-i18n="hero.lede">Raccontaci il tuo contesto: un consulente del Gruppo Lobra ti risponderà al più presto.</p>
+      </div>
+    </header>
+
+    <section class="section">
+      <div class="container split-27">
+        <div class="reveal">
+          <h2 class="h3" data-i18n="offices.title">Le nostre sedi</h2>
+          <div class="grid" id="contact-offices" style="margin-top:var(--space-6);gap:var(--space-5)"></div>
+        </div>
+
+        <form id="contact-form" class="reveal" novalidate>
+          <div class="grid grid-2" style="gap: var(--space-5) var(--space-6)">
+            <div class="form-field">
+              <label for="f-name" data-i18n="form.name">Nome e cognome</label>
+              <input id="f-name" name="name" type="text" autocomplete="name" required />
+            </div>
+            <div class="form-field">
+              <label for="f-company" data-i18n="form.company">Azienda</label>
+              <input id="f-company" name="company" type="text" autocomplete="organization" required />
+            </div>
+            <div class="form-field">
+              <label for="f-email" data-i18n="form.email">Email aziendale</label>
+              <input id="f-email" name="email" type="email" autocomplete="email" required />
+            </div>
+            <div class="form-field">
+              <label for="f-phone" data-i18n="form.phone">Telefono (facoltativo)</label>
+              <input id="f-phone" name="phone" type="tel" autocomplete="tel" />
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label for="f-subject" data-i18n="form.subject">Area di interesse</label>
+            <select id="f-subject" name="subject"></select>
+          </div>
+
+          <div class="form-field">
+            <label for="f-message" data-i18n="form.message">Messaggio</label>
+            <textarea id="f-message" name="message" required></textarea>
+          </div>
+
+          <p class="form-hint" data-i18n="form.privacy">Inviando il modulo accetti il trattamento dei dati secondo la nostra Privacy Policy.</p>
+
+          <button type="submit" class="btn btn-primary magnetic" style="margin-top:var(--space-5)" data-i18n="form.submit">Invia richiesta</button>
+
+          <div class="form-status" id="form-status" role="status" aria-live="polite"></div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer id="site-footer" class="site-footer"></footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="js/partials.js"></script>
+  <script src="js/cms.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/render.js"></script>
+  <script src="js/motion.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      LobraMotion.initHeaderAndProgress();
+      LobraMotion.initCursorFx();
+      Promise.all([
+        LobraRender.renderOffices('contact-offices', 'chi-siamo'),
+        LobraRender.wireContactForm()
+      ]).then(function () {
+        LobraMotion.initReveals();
+        LobraMotion.initMagnetic();
+      });
+    });
+  </script>
+</body>
+</html>

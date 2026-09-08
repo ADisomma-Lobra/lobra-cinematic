@@ -1,0 +1,22 @@
+{
+  "it": {
+    "name": "SAP",
+    "tagline": "Il digital core dei nostri clienti enterprise, dal BTP a S/4HANA.",
+    "intro": "Progettiamo e integriamo l'ecosistema SAP a supporto dei processi core, della customer experience e della gestione della fatturazione ricorrente.",
+    "groups": [
+      { "title": "Piattaforma", "items": ["Business Technology Platform (BTP)", "S/4HANA"] },
+      { "title": "Customer Experience", "items": ["SAP Customer Experience Clouds"] },
+      { "title": "Billing", "items": ["Billing & Revenue Management (BRIM)"] }
+    ]
+  },
+  "en": {
+    "name": "SAP",
+    "tagline": "Our enterprise clients' digital core, from BTP to S/4HANA.",
+    "intro": "We design and integrate the SAP ecosystem to support core processes, customer experience and recurring revenue billing.",
+    "groups": [
+      { "title": "Platform", "items": ["Business Technology Platform (BTP)", "S/4HANA"] },
+      { "title": "Customer Experience", "items": ["SAP Customer Experience Clouds"] },
+      { "title": "Billing", "items": ["Billing & Revenue Management (BRIM)"] }
+    ]
+  }
+}

@@ -1,0 +1,5 @@
+[
+  { "tag": "Customer Experience", "name": "Lobra", "it": { "body": "La società madre del gruppo, specializzata in Customer Experience e Customer Engagement: progettiamo il modo in cui i vostri clienti vi vivono, su ogni canale." }, "en": { "body": "The group's parent company, specialised in Customer Experience and Customer Engagement: we design how your customers experience you, across every channel." } },
+  { "tag": "Microsoft", "name": "Lobra Futura", "it": { "body": "Il centro di competenza Microsoft del gruppo: cloud, automazione dei processi e collaborazione aziendale su scala enterprise." }, "en": { "body": "The group's Microsoft competence centre: cloud, process automation and enterprise-scale collaboration." } },
+  { "tag": "SAP", "name": "Athenea", "it": { "body": "Lo specialista SAP del gruppo: digital core, S/4HANA e piattaforme di billing per i processi mission-critical dei nostri clienti." }, "en": { "body": "The group's SAP specialist: digital core, S/4HANA and billing platforms for our clients' mission-critical processes." } }
+]

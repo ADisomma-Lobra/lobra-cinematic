@@ -26,28 +26,57 @@
     return path.split('.').reduce((acc, key) => (acc && acc[key] !== undefined ? acc[key] : undefined), obj);
   }
 
+  // every page is its own Storyblok story; body.data-page tells us which
+  // one, and which local JSON file to fall back to if Storyblok is down
+  const PAGE_CONFIG = {
+    home: { slug: 'home', local: 'content' },
+    about: { slug: 'chi-siamo', local: 'content/chi-siamo' },
+    services: { slug: 'servizi', local: 'content/servizi' },
+    tech: { slug: 'tecnologie', local: 'content/tecnologie' },
+    sectors: { slug: 'settori', local: 'content/settori' },
+    contact: { slug: 'contatti', local: 'content/contatti' }
+  };
+  function currentPage() {
+    const page = document.body.getAttribute('data-page') || 'home';
+    return PAGE_CONFIG[page] || PAGE_CONFIG.home;
+  }
+
   async function loadLocalDictionary(lang) {
-    const res = await fetch(`content/${lang}.json`, { cache: 'no-store' });
-    if (!res.ok) throw new Error(`Impossibile caricare content/${lang}.json (${res.status})`);
+    const base = currentPage().local;
+    const res = await fetch(`${base}.${lang}.json`, { cache: 'no-store' });
+    if (!res.ok) throw new Error(`Impossibile caricare ${base}.${lang}.json (${res.status})`);
     return res.json();
   }
 
-  // builds a dictionary shaped exactly like content/{lang}.json, but sourced
-  // from the Storyblok "home" story's *_copy blocks — every data-i18n path
-  // used across the page keeps working unchanged either way. `body` here is
-  // already the language-resolved copy of the story (see cms.js), so every
-  // field is read directly, no __i18n__ suffix involved at this layer.
-  function dictionaryFromStoryblok(body) {
+  function footerDict(homeBody) {
+    const CMS = window.LobraCMS;
+    const footer = CMS.findBlock(homeBody, 'footer_copy');
+    const t = (key) => (footer ? footer[key] : undefined);
+    return { tagline: t('tagline'), col: { nav: t('nav_label'), group: t('group_label') }, copyright: t('copyright'), note: t('note') };
+  }
+  function navDict(body) {
+    const CMS = window.LobraCMS;
+    const nav = CMS.findBlock(body, 'nav_copy');
+    const t = (key) => (nav ? nav[key] : undefined);
+    return { services: t('services'), tools: t('tools'), journey: t('journey'), sectors: t('sectors'), stories: t('stories'), faq: t('faq'), contact: t('contact'), cta: t('cta') };
+  }
+
+  // builds a dictionary shaped exactly like content/{lang}.json (Home's own
+  // flat shape), sourced from the Storyblok "home" story's *_copy blocks —
+  // every data-i18n path used on the homepage keeps working unchanged.
+  // `body` is already the language-resolved copy of the story (see cms.js),
+  // so every field is read directly, no __i18n__ suffix involved here.
+  function dictionaryForHome(body) {
     const CMS = window.LobraCMS;
     const find = (name) => CMS.findBlock(body, name);
     const t = (block, key) => (block ? block[key] : undefined);
-    const meta = find('meta_copy'), nav = find('nav_copy'), hero = find('hero_copy'), tools = find('tools_copy'),
+    const meta = find('meta_copy'), hero = find('hero_copy'), tools = find('tools_copy'),
       media = find('media_copy'), trust = find('trust_copy'), sectors = find('sectors_copy'),
       stats = find('stats_copy'), stories = find('stories_copy'), faq = find('faq_copy'),
-      finalCta = find('finalcta_copy'), footer = find('footer_copy');
+      finalCta = find('finalcta_copy');
     return {
       meta: { title: t(meta, 'title') },
-      nav: { tools: t(nav, 'tools'), journey: t(nav, 'journey'), sectors: t(nav, 'sectors'), stories: t(nav, 'stories'), faq: t(nav, 'faq'), contact: t(nav, 'contact'), cta: t(nav, 'cta') },
+      nav: navDict(body),
       hero: { eyebrow: t(hero, 'eyebrow'), title: t(hero, 'title'), lede: t(hero, 'lede'), cta1: t(hero, 'cta1'), cta2: t(hero, 'cta2') },
       tools: { eyebrow: t(tools, 'eyebrow'), title: t(tools, 'title'), lede: t(tools, 'lede') },
       media: { tag: t(media, 'tag'), caption: t(media, 'caption'), scrub: t(media, 'scrub') },
@@ -59,20 +88,99 @@
       stats: { eyebrow: t(stats, 'eyebrow'), title: t(stats, 'title'), cta: t(stats, 'cta') },
       stories: { eyebrow: t(stories, 'eyebrow'), title: t(stories, 'title'), disclaimer: t(stories, 'disclaimer') },
       faq: { eyebrow: t(faq, 'eyebrow'), title: t(faq, 'title') },
-      finalCta: { eyebrow: t(finalCta, 'eyebrow'), title: t(finalCta, 'title'), lede: t(finalCta, 'lede'), action1: t(finalCta, 'action1'), action2: t(finalCta, 'action2') },
-      footer: {
-        tagline: t(footer, 'tagline'),
-        col: { nav: t(footer, 'nav_label'), group: t(footer, 'group_label') },
-        copyright: t(footer, 'copyright'),
-        note: t(footer, 'note')
-      }
+      finalCta: { eyebrow: t(finalCta, 'eyebrow'), title: t(finalCta, 'title'), lede: t(finalCta, 'lede'), action1: t(finalCta, 'action1'), action2: t(finalCta, 'action2') }
     };
   }
 
+  function dictionaryForAbout(body) {
+    const CMS = window.LobraCMS;
+    const find = (name) => CMS.findBlock(body, name);
+    const t = (block, key) => (block ? block[key] : undefined);
+    const hero = find('about_hero_copy'), identity = find('about_identity_copy'), companies = find('about_companies_copy'),
+      numbers = find('about_numbers_copy'), offices = find('about_offices_copy'), care = find('about_care_copy');
+    return {
+      meta: { title: t(find('meta_copy'), 'title') }, nav: navDict(body),
+      hero: { eyebrow: t(hero, 'eyebrow'), title: t(hero, 'title'), lede: t(hero, 'lede') },
+      identity: { eyebrow: t(identity, 'eyebrow'), title: t(identity, 'title'), body1: t(identity, 'body1'), body2: t(identity, 'body2') },
+      companies: { eyebrow: t(companies, 'eyebrow'), title: t(companies, 'title') },
+      numbers: { eyebrow: t(numbers, 'eyebrow'), title: t(numbers, 'title') },
+      offices: { eyebrow: t(offices, 'eyebrow'), title: t(offices, 'title'), lede: t(offices, 'lede') },
+      care: { eyebrow: t(care, 'eyebrow'), title: t(care, 'title'), lede: t(care, 'lede'), partnersTitle: t(care, 'partners_title') }
+    };
+  }
+
+  function dictionaryForServizi(body) {
+    const CMS = window.LobraCMS;
+    const find = (name) => CMS.findBlock(body, name);
+    const t = (block, key) => (block ? block[key] : undefined);
+    const hero = find('services_hero_copy'), cta = find('services_cta_copy');
+    return {
+      meta: { title: t(find('meta_copy'), 'title') }, nav: navDict(body),
+      hero: { eyebrow: t(hero, 'eyebrow'), title: t(hero, 'title'), lede: t(hero, 'lede') },
+      cta: { title: t(cta, 'title'), lede: t(cta, 'lede'), action: t(cta, 'action') }
+    };
+  }
+
+  function dictionaryForTecnologie(body) {
+    const CMS = window.LobraCMS;
+    const find = (name) => CMS.findBlock(body, name);
+    const t = (block, key) => (block ? block[key] : undefined);
+    const hero = find('tech_hero_copy'), other = find('tech_other_copy');
+    return {
+      meta: { title: t(find('meta_copy'), 'title') }, nav: navDict(body),
+      hero: { eyebrow: t(hero, 'eyebrow'), title: t(hero, 'title'), lede: t(hero, 'lede') },
+      other: { title: t(other, 'title') }
+    };
+  }
+
+  function dictionaryForSettori(body) {
+    const CMS = window.LobraCMS;
+    const find = (name) => CMS.findBlock(body, name);
+    const t = (block, key) => (block ? block[key] : undefined);
+    const hero = find('settori_hero_copy'), stories = find('settori_stories_copy');
+    return {
+      meta: { title: t(find('meta_copy'), 'title') }, nav: navDict(body),
+      hero: { eyebrow: t(hero, 'eyebrow'), title: t(hero, 'title'), lede: t(hero, 'lede') },
+      stories: { eyebrow: t(stories, 'eyebrow'), title: t(stories, 'title'), lede: t(stories, 'lede'), disclaimer: t(stories, 'disclaimer') }
+    };
+  }
+
+  function dictionaryForContatti(body) {
+    const CMS = window.LobraCMS;
+    const find = (name) => CMS.findBlock(body, name);
+    const t = (block, key) => (block ? block[key] : undefined);
+    const hero = find('contact_hero_copy'), form = find('contact_form_copy');
+    return {
+      meta: { title: t(find('meta_copy'), 'title') }, nav: navDict(body),
+      hero: { eyebrow: t(hero, 'eyebrow'), title: t(hero, 'title'), lede: t(hero, 'lede') },
+      form: {
+        name: t(form, 'name'), company: t(form, 'company'), email: t(form, 'email'), phone: t(form, 'phone'),
+        subject: t(form, 'subject'), message: t(form, 'message'), submit: t(form, 'submit'), privacy: t(form, 'privacy')
+      },
+      offices: { title: 'Le nostre sedi' }
+    };
+  }
+
+  const BUILDERS = {
+    home: dictionaryForHome, about: dictionaryForAbout, services: dictionaryForServizi,
+    tech: dictionaryForTecnologie, sectors: dictionaryForSettori, contact: dictionaryForContatti
+  };
+
   async function loadDictionary(lang) {
-    const body = window.LobraCMS ? await window.LobraCMS.getHome(lang) : null;
-    if (body) return dictionaryFromStoryblok(body);
-    return loadLocalDictionary(lang);
+    const page = document.body.getAttribute('data-page') || 'home';
+    const { slug } = PAGE_CONFIG[page] || PAGE_CONFIG.home;
+    const builder = BUILDERS[page] || BUILDERS.home;
+    if (!window.LobraCMS) return loadLocalDictionary(lang);
+
+    const [body, homeBody] = await Promise.all([
+      window.LobraCMS.getStory(slug, lang),
+      slug === 'home' ? Promise.resolve(null) : window.LobraCMS.getStory('home', lang)
+    ]);
+    if (!body) return loadLocalDictionary(lang);
+
+    const dict = builder(body);
+    dict.footer = slug === 'home' ? footerDict(body) : footerDict(homeBody || body);
+    return dict;
   }
 
   function applyDictionary(dict) {

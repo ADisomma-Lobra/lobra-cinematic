@@ -1,0 +1,16 @@
+{
+  "meta": { "title": "Tecnologie & Partner — Gruppo Lobra" },
+  "nav": { "services": "Servizi", "tools": "Tecnologie", "journey": "Chi siamo", "sectors": "Settori", "stories": "Storie", "faq": "FAQ", "contact": "Contatti", "cta": "Contattaci" },
+  "hero": {
+    "eyebrow": "Tecnologie & Partner",
+    "title": "Le piattaforme che integriamo",
+    "lede": "Siamo partner certificati sulle tecnologie enterprise più diffuse. Ogni piattaforma ha una pagina dedicata con le competenze specifiche del gruppo."
+  },
+  "other": { "title": "Lavoriamo anche con" },
+  "footer": {
+    "tagline": "Dal 2016 trasformiamo la complessità in direzione.",
+    "col": { "nav": "Naviga", "group": "Gruppo Lobra" },
+    "copyright": "Lobra S.r.l. Tutti i diritti riservati.",
+    "note": "Concept cinematico — versione dimostrativa."
+  }
+}

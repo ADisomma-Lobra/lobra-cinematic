@@ -1,0 +1,30 @@
+{
+  "meta": { "title": "Chi siamo — Gruppo Lobra" },
+  "nav": { "services": "Servizi", "tools": "Tecnologie", "journey": "Chi siamo", "sectors": "Settori", "stories": "Storie", "faq": "FAQ", "contact": "Contatti", "cta": "Contattaci" },
+  "hero": {
+    "eyebrow": "Chi siamo",
+    "title": "Un gruppo, tre aziende, un solo obiettivo: farvi muovere meglio.",
+    "lede": "Il Gruppo Lobra riunisce competenze diverse — Customer Experience, Microsoft, SAP — sotto un unico approccio: people-first e orientato ai risultati."
+  },
+  "identity": {
+    "eyebrow": "La nostra identità",
+    "title": "Le persone prima di tutto",
+    "body1": "Da qui iniziano tutti i nostri progetti: dalle persone, non dalla tecnologia. Il nostro DNA è un approccio people-first, che mette al centro chi lavora con noi e per i nostri clienti.",
+    "body2": "Crediamo che la complessità si affronti con metodo, non con scorciatoie. Per questo costruiamo relazioni di lungo periodo, non progetti spot."
+  },
+  "companies": { "eyebrow": "Le nostre aziende", "title": "Tre società, un ecosistema integrato" },
+  "numbers": { "eyebrow": "I numeri", "title": "Il Gruppo Lobra in cifre" },
+  "offices": { "eyebrow": "Le nostre sedi", "title": "Dove lavoriamo, ogni giorno", "lede": "Cinque sedi in Italia e un ufficio internazionale a Dublino." },
+  "care": {
+    "eyebrow": "Impatto sociale",
+    "title": "Lobra gives back",
+    "lede": "Crediamo che un'azienda debba restituire valore al territorio in cui opera. Per questo sosteniamo realtà che lavorano ogni giorno per chi ha più bisogno.",
+    "partnersTitle": "Le realtà che sosteniamo"
+  },
+  "footer": {
+    "tagline": "Dal 2016 trasformiamo la complessità in direzione.",
+    "col": { "nav": "Naviga", "group": "Gruppo Lobra" },
+    "copyright": "Lobra S.r.l. Tutti i diritti riservati.",
+    "note": "Concept cinematico — versione dimostrativa."
+  }
+}

@@ -1,0 +1,8 @@
+[
+  { "city": "Roma",     "country": { "it": "Italia",  "en": "Italy" } },
+  { "city": "Milano",   "country": { "it": "Italia",  "en": "Italy" } },
+  { "city": "Napoli",   "country": { "it": "Italia",  "en": "Italy" } },
+  { "city": "Treviso",  "country": { "it": "Italia",  "en": "Italy" } },
+  { "city": "Monopoli", "country": { "it": "Italia",  "en": "Italy" } },
+  { "city": "Dublino",  "country": { "it": "Irlanda", "en": "Ireland" } }
+]

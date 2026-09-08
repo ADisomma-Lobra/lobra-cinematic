@@ -1,0 +1,9 @@
+[
+  { "slug": "salesforce", "hasPage": true, "name": "Salesforce", "it": { "tagline": "La piattaforma su cui costruiamo customer experience e AI agentiva." }, "en": { "tagline": "The platform we build customer experience and agentic AI on." } },
+  { "slug": "sap", "hasPage": true, "name": "SAP", "it": { "tagline": "Il digital core dei nostri clienti enterprise, dal BTP a S/4HANA." }, "en": { "tagline": "Our enterprise clients' digital core, from BTP to S/4HANA." } },
+  { "slug": "microsoft", "hasPage": true, "name": "Microsoft", "it": { "tagline": "Cloud, automazione e collaborazione, su scala enterprise." }, "en": { "tagline": "Cloud, automation and collaboration, at enterprise scale." } },
+  { "slug": "odoo", "hasPage": true, "name": "Odoo", "it": { "tagline": "Un ERP unico, modulare, per gestire l'azienda end-to-end." }, "en": { "tagline": "One modular ERP to run the whole business end-to-end." } },
+  { "slug": "informatica", "hasPage": false, "name": "Informatica", "it": {}, "en": {} },
+  { "slug": "opentext", "hasPage": false, "name": "OpenText", "it": {}, "en": {} },
+  { "slug": "shopify", "hasPage": false, "name": "Shopify", "it": {}, "en": {} }
+]

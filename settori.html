@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title data-i18n="meta.title">Settori &amp; Success Stories — Gruppo Lobra</title>
+  <meta name="description" content="I settori in cui il Gruppo Lobra lavora: Fashion &amp; Luxury, Retail, Manufacturing, Financial Services e altri, con alcune success stories." />
+  <meta name="robots" content="noindex" />
+  <link rel="icon" href="images/favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <noscript><style>.reveal{opacity:1!important;transform:none!important;}</style></noscript>
+</head>
+<body data-page="sectors">
+  <div id="cursor-fx" aria-hidden="true"></div>
+  <div class="scroll-progress" id="scroll-progress"></div>
+  <a class="skip-link" href="#main">Vai al contenuto principale</a>
+  <header id="site-header" class="site-header"></header>
+
+  <main id="main">
+    <header class="page-hero">
+      <div class="container">
+        <span class="eyebrow" data-i18n="hero.eyebrow">Settori</span>
+        <h1 class="h1 reveal" style="margin-top:16px" data-i18n="hero.title">Dove portiamo i nostri risultati</h1>
+        <p class="lede reveal" style="margin-top:18px" data-i18n="hero.lede">Lavoriamo in settori in cui la relazione con il cliente, il dettaglio e la complessità dei processi fanno la differenza.</p>
+      </div>
+    </header>
+
+    <section class="section">
+      <div class="container">
+        <div class="grid grid-3" id="sectors-grid"></div>
+      </div>
+    </section>
+
+    <section class="section-tight section-divider">
+      <div class="container">
+        <span class="eyebrow" data-i18n="stories.eyebrow">Success stories</span>
+        <h2 class="h2" style="margin-top:14px" data-i18n="stories.title">Alcuni dei progetti realizzati</h2>
+        <p class="lede" style="margin-top:14px" data-i18n="stories.lede">Una selezione di collaborazioni nel settore Fashion &amp; Luxury.</p>
+        <div class="grid grid-2" id="stories-grid" style="margin-top:var(--space-6)"></div>
+        <p class="mono text-muted" style="margin-top:var(--space-6);font-size:12.5px" data-i18n="stories.disclaimer">Contenuti a scopo illustrativo: in attesa di conferma dei singoli clienti prima della pubblicazione.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer id="site-footer" class="site-footer"></footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="js/partials.js"></script>
+  <script src="js/cms.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/render.js"></script>
+  <script src="js/motion.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      LobraMotion.initHeaderAndProgress();
+      LobraMotion.initCursorFx();
+      Promise.all([
+        LobraRender.renderSectorsGrid('sectors-grid'),
+        LobraRender.renderSuccessStories('stories-grid')
+      ]).then(function () {
+        LobraMotion.initReveals();
+        LobraMotion.initMagnetic();
+      });
+    });
+  </script>
+</body>
+</html>

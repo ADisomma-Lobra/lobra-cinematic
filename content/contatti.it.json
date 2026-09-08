@@ -1,0 +1,21 @@
+{
+  "meta": { "title": "Contatti — Gruppo Lobra" },
+  "nav": { "services": "Servizi", "tools": "Tecnologie", "journey": "Chi siamo", "sectors": "Settori", "stories": "Storie", "faq": "FAQ", "contact": "Contatti", "cta": "Contattaci" },
+  "hero": {
+    "eyebrow": "Contatti",
+    "title": "Parliamo del tuo progetto",
+    "lede": "Raccontaci il tuo contesto: un consulente del Gruppo Lobra ti risponderà al più presto."
+  },
+  "form": {
+    "name": "Nome e cognome", "company": "Azienda", "email": "Email aziendale", "phone": "Telefono (facoltativo)",
+    "subject": "Area di interesse", "message": "Messaggio", "submit": "Invia richiesta",
+    "privacy": "Inviando il modulo accetti il trattamento dei dati secondo la nostra Privacy Policy."
+  },
+  "offices": { "title": "Le nostre sedi" },
+  "footer": {
+    "tagline": "Dal 2016 trasformiamo la complessità in direzione.",
+    "col": { "nav": "Naviga", "group": "Gruppo Lobra" },
+    "copyright": "Lobra S.r.l. Tutti i diritti riservati.",
+    "note": "Concept cinematico — versione dimostrativa."
+  }
+}

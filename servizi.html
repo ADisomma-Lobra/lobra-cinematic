@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title data-i18n="meta.title">Servizi — Gruppo Lobra</title>
+  <meta name="description" content="Le otto aree di competenza del Gruppo Lobra: Customer Experience, System Integration, Data, IT Consulting, AI e altro." />
+  <meta name="robots" content="noindex" />
+  <link rel="icon" href="images/favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <noscript><style>.reveal{opacity:1!important;transform:none!important;}</style></noscript>
+</head>
+<body data-page="services">
+  <div id="cursor-fx" aria-hidden="true"></div>
+  <div class="scroll-progress" id="scroll-progress"></div>
+  <a class="skip-link" href="#main">Vai al contenuto principale</a>
+  <header id="site-header" class="site-header"></header>
+
+  <main id="main">
+    <header class="page-hero">
+      <div class="container">
+        <span class="eyebrow" data-i18n="hero.eyebrow">Servizi</span>
+        <h1 class="h1 reveal" style="margin-top:16px" data-i18n="hero.title">Cosa facciamo, in concreto</h1>
+        <p class="lede reveal" style="margin-top:18px" data-i18n="hero.lede">Otto aree di competenza, un solo obiettivo: rendere più semplice ciò che è complesso. Dalla customer experience all'intelligenza artificiale, lavoriamo lungo tutto il ciclo di vita dei vostri sistemi.</p>
+      </div>
+    </header>
+
+    <section class="section">
+      <div class="container">
+        <div class="grid grid-services" id="all-services-grid"></div>
+      </div>
+    </section>
+
+    <section class="section-tight">
+      <div class="container">
+        <div class="cta-band reveal">
+          <div class="cta-band-grid">
+            <div>
+              <h2 class="h3" data-i18n="cta.title">Non sai da dove iniziare?</h2>
+              <p style="margin-top:8px" data-i18n="cta.lede">Parliamo del tuo contesto: ti aiutiamo a capire quale area affrontare per prima.</p>
+            </div>
+            <a href="contatti.html" class="btn btn-primary magnetic" data-i18n="cta.action">Contattaci</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="site-footer" class="site-footer"></footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="js/partials.js"></script>
+  <script src="js/cms.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/render.js"></script>
+  <script src="js/motion.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      LobraMotion.initHeaderAndProgress();
+      LobraMotion.initCursorFx();
+      LobraRender.renderServices('all-services-grid').then(function () {
+        LobraMotion.initReveals();
+        LobraMotion.initMagnetic();
+      });
+    });
+  </script>
+</body>
+</html>

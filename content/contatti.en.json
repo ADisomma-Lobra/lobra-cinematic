@@ -1,0 +1,21 @@
+{
+  "meta": { "title": "Contact — Gruppo Lobra" },
+  "nav": { "services": "Services", "tools": "Technologies", "journey": "About us", "sectors": "Industries", "stories": "Stories", "faq": "FAQ", "contact": "Contact", "cta": "Contact us" },
+  "hero": {
+    "eyebrow": "Contact",
+    "title": "Let's talk about your project",
+    "lede": "Tell us about your context: a Gruppo Lobra consultant will get back to you shortly."
+  },
+  "form": {
+    "name": "Full name", "company": "Company", "email": "Business email", "phone": "Phone (optional)",
+    "subject": "Area of interest", "message": "Message", "submit": "Send request",
+    "privacy": "By submitting this form you agree to the processing of your data under our Privacy Policy."
+  },
+  "offices": { "title": "Our offices" },
+  "footer": {
+    "tagline": "Since 2016 we've turned complexity into direction.",
+    "col": { "nav": "Navigate", "group": "Gruppo Lobra" },
+    "copyright": "Lobra S.r.l. All rights reserved.",
+    "note": "Cinematic concept — demonstration version."
+  }
+}

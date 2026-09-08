@@ -1,0 +1,22 @@
+{
+  "it": {
+    "name": "Microsoft",
+    "tagline": "Cloud, automazione e collaborazione, su scala enterprise.",
+    "intro": "Lobra Futura è il centro di competenza del gruppo sull'ecosistema Microsoft: cloud, automazione dei processi e collaborazione aziendale.",
+    "groups": [
+      { "title": "Cloud & Platform", "items": ["Azure", "Cloud Computing"] },
+      { "title": "Automazione", "items": ["Power Platform", "DevOps"] },
+      { "title": "Collaborazione", "items": ["Collaborative Working (Microsoft 365 & Teams)"] }
+    ]
+  },
+  "en": {
+    "name": "Microsoft",
+    "tagline": "Cloud, automation and collaboration, at enterprise scale.",
+    "intro": "Lobra Futura is the group's Microsoft competence centre: cloud, process automation and enterprise collaboration.",
+    "groups": [
+      { "title": "Cloud & Platform", "items": ["Azure", "Cloud Computing"] },
+      { "title": "Automation", "items": ["Power Platform", "DevOps"] },
+      { "title": "Collaboration", "items": ["Collaborative Working (Microsoft 365 & Teams)"] }
+    ]
+  }
+}
