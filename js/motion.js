@@ -197,7 +197,7 @@
     const n = bubbles.length || 1;
 
     gsap.set(bubbles, { opacity: 0, y: 46, scale: 0.55, transformOrigin: '50% 50%' });
-    gsap.set(circle, { width: 10, height: 10, borderRadius: '50%' });
+    gsap.set(circle, { width: 10, height: 10, borderRadius: '50%', opacity: 0 });
     if (scrubCopy) gsap.set(scrubCopy, { opacity: 0 });
 
     let maxSize = Math.max(window.innerWidth, window.innerHeight) * 1.5;
@@ -213,6 +213,13 @@
         return { dx: cx - (r.left + r.width / 2), dy: cy - (r.top + r.height / 2) };
       });
       maxSize = Math.max(window.innerWidth, window.innerHeight) * 1.5;
+      // the fish mark sits dead-centre of the orbit (its own CSS is
+      // left:50%/top:50% within it) — anchor the reveal circle there too,
+      // in px relative to the scene, so it opens from directly behind the
+      // fish instead of the scene's own 50/50 point (which doesn't match
+      // the orbit's actual position once the heading above it is measured in)
+      const sceneRect = scene.getBoundingClientRect();
+      gsap.set(circle, { left: cx - sceneRect.left, top: cy - sceneRect.top });
     }
     measure();
 
@@ -253,7 +260,7 @@
 
         const size = lerp(10, maxSize, convergeP);
         const radius = lerp(50, 0, clamp(convergeP / 0.85));
-        gsap.set(circle, { width: size, height: size, borderRadius: radius + '%' });
+        gsap.set(circle, { width: size, height: size, borderRadius: radius + '%', opacity: clamp(convergeP / 0.1) });
 
         if (scrubCopy) {
           gsap.set(scrubCopy, { opacity: clamp((p - 0.74) / 0.04) });

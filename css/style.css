@@ -120,13 +120,13 @@ section[id]{ scroll-margin-top: 84px; }
   background: transparent; transition: background var(--dur-med) var(--ease-out), border-color var(--dur-med) var(--ease-out), box-shadow var(--dur-med) var(--ease-out);
   border-bottom: 1px solid transparent;
 }
-.site-header.is-scrolled{ background: rgba(248,248,248,.86); backdrop-filter: saturate(160%) blur(14px); -webkit-backdrop-filter: saturate(160%) blur(14px); border-color: var(--line); }
+.site-header.is-scrolled{ background: rgba(248,248,248,.6); backdrop-filter: saturate(160%) blur(16px); -webkit-backdrop-filter: saturate(160%) blur(16px); border-color: rgba(227,225,220,.6); }
 .site-header.is-on-dark{ color: var(--on-ink); }
 /* is-scrolled's light glass background stays applied underneath is-on-dark
    (both classes are independent — scroll position vs. what's behind the bar)
    so it needs its own dark glass here, or white text on a light bar reads
    as nothing at all */
-.site-header.is-on-dark.is-scrolled{ background: rgba(11,15,20,.82); border-color: rgba(255,255,255,.12); }
+.site-header.is-on-dark.is-scrolled{ background: rgba(11,15,20,.56); border-color: rgba(255,255,255,.1); }
 .header-row{ display: grid; grid-template-columns: minmax(max-content,1fr) auto minmax(max-content,1fr); align-items: center; height: 80px; gap: var(--space-6); }
 .brand{ display: flex; align-items: center; gap: var(--space-3); justify-self: start; flex-shrink: 0; }
 .brand img{ height: 24px; width: auto; transition: filter var(--dur-med) var(--ease-out); }
@@ -301,7 +301,7 @@ html.no-js .reveal{ opacity: 1; transform: none; }
 .tools-bubble svg{ width: 100%; height: 100%; fill: currentColor; }
 @keyframes bubble-float{ 0%,100%{ transform: translateY(0);} 50%{ transform: translateY(-8px);} }
 
-.tools-mark{ position: absolute; left: 50%; top: 50%; width: clamp(48px,6vw,74px); transform: translate(-50%,-50%); z-index: 3; opacity: 0; transition: opacity 1s var(--ease-out); }
+.tools-mark{ position: absolute; left: 50%; top: 50%; width: clamp(92px,11vw,152px); transform: translate(-50%,-50%); z-index: 3; opacity: 0; transition: opacity 1s var(--ease-out); }
 .tools-mark.is-in{ opacity: 1; }
 .tools-mark svg{ width: 100%; height: auto; animation: fish-idle 4.2s ease-in-out infinite; transform-origin: 50% 50%; }
 @keyframes fish-idle{ 0%,100%{ transform: scale(1) rotate(0deg);} 50%{ transform: scale(1.08) rotate(-4deg);} }
@@ -314,8 +314,11 @@ html.no-js .reveal{ opacity: 1; transform: none; }
    ========================================================================== */
 .reveal-circle{
   position: absolute; left: 50%; top: 50%; width: 10px; height: 10px; border-radius: 50%;
-  transform: translate(-50%,-50%); overflow: hidden; background: var(--ink-2);
-  z-index: 5; /* paint above the orbit's text/bubbles (z-index 2) as it grows */
+  transform: translate(-50%,-50%); overflow: hidden; background: var(--ink-2); opacity: 0;
+  z-index: 5; /* paint above the orbit's text/bubbles (z-index 2) as it grows;
+    starts invisible and repositioned onto the fish mark's exact centre by
+    JS (initToolsReveal's measure()), then fades in right as it starts
+    opening so nothing shows before the reveal begins */
 }
 .reveal-media{ position: absolute; inset: 0; width: 100vw; height: 100dvh; left: 50%; top: 50%; transform: translate(-50%,-50%); }
 .media-scene{ position: absolute; inset: 0; background: var(--ink); overflow: hidden; }
@@ -356,7 +359,7 @@ html.no-js .reveal{ opacity: 1; transform: none; }
 @media (max-width: 900px), (prefers-reduced-motion: reduce){
   .tools-scene{ min-height: auto; }
   .tools-bubble{ animation: bubble-float 5s ease-in-out infinite; }
-  .reveal-circle{ position: relative; width: 100%; height: 62vh; border-radius: 0; transform: none; left: auto; top: auto; margin-top: var(--space-8); }
+  .reveal-circle{ position: relative; width: 100%; height: 62vh; border-radius: 0; transform: none; left: auto; top: auto; margin-top: var(--space-8); opacity: 1; }
   .reveal-media{ position: relative; width: 100%; height: 100%; left: auto; top: auto; transform: none; }
   .scrub-copy{ position: relative; padding-block: var(--space-8); }
   .scrub-copy .word{ opacity: 1; }
