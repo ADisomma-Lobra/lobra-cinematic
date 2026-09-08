@@ -132,9 +132,12 @@
   }
 
   /* ---------- Act 2: tool bubbles orbiting the mark ---------- */
+  // re-spaced so no two bubbles sit closer than ~220px centre-to-centre at
+  // the orbit's max size (the old set had one pair only ~160px apart, which
+  // is exactly what a 380px-wide hover tile would swallow whole)
   const BUBBLE_POS = [
-    { top: '4%', left: '14%' }, { top: '2%', left: '58%' }, { top: '20%', left: '86%' },
-    { top: '58%', left: '92%' }, { top: '80%', left: '62%' }, { top: '82%', left: '18%' },
+    { top: '2%', left: '12%' }, { top: '0%', left: '56%' }, { top: '12%', left: '90%' },
+    { top: '66%', left: '94%' }, { top: '82%', left: '64%' }, { top: '84%', left: '16%' },
     { top: '46%', left: '0%' }
   ];
   const GENERIC_TAGLINE = { it: 'Partner tecnologico di Lobra.', en: "Lobra's technology partner." };

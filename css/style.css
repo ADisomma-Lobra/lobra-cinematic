@@ -301,12 +301,22 @@ html.no-js .reveal{ opacity: 1; transform: none; }
 .floating-paths svg{ width: 100%; height: 100%; }
 .floating-paths path{ fill: none; stroke: var(--crimson); }
 .tools-scene .h2{ color: #fff; margin-top: var(--space-4); }
-.tools-orbit{ position: relative; width: min(78vw, 720px); aspect-ratio: 16/9; margin: var(--space-8) auto 0; }
+.tools-orbit{ position: relative; width: min(84vw, 820px); aspect-ratio: 16/9; margin: var(--space-8) auto 0; }
 .tools-bubble{
-  position: absolute; width: clamp(64px,7vw,92px); height: clamp(64px,7vw,92px); border-radius: 50%;
+  position: absolute; width: clamp(58px,6.4vw,84px); height: clamp(58px,6.4vw,84px); border-radius: 50%;
   background: linear-gradient(155deg, #fff 0%, #f3f2f0 100%);
   box-shadow: 0 1px 0 rgba(255,255,255,.6) inset, 0 -10px 16px -12px rgba(0,0,0,.12) inset, 0 10px 22px -12px rgba(0,0,0,.4), 0 26px 46px -22px rgba(0,0,0,.55);
   cursor: pointer;
+  /* idle "breathing" glow so the cluster reads as alive/explorable before
+     anyone hovers — animates box-shadow only, never transform/opacity,
+     which the scroll-scrub in initToolsReveal (motion.js) keeps writing to
+     this same element on every scroll tick */
+  animation: bubble-breathe 3.6s ease-in-out infinite;
+}
+.tools-bubble:hover, .tools-bubble:focus-visible{ animation-play-state: paused; }
+@keyframes bubble-breathe{
+  0%, 100%{ box-shadow: 0 1px 0 rgba(255,255,255,.6) inset, 0 -10px 16px -12px rgba(0,0,0,.12) inset, 0 10px 22px -12px rgba(0,0,0,.4), 0 26px 46px -22px rgba(0,0,0,.55), 0 0 0 0 transparent; }
+  50%{ box-shadow: 0 1px 0 rgba(255,255,255,.6) inset, 0 -10px 16px -12px rgba(0,0,0,.12) inset, 0 10px 22px -12px rgba(0,0,0,.4), 0 26px 46px -22px rgba(0,0,0,.55), 0 0 22px 3px color-mix(in srgb, currentColor 45%, transparent); }
 }
 .tools-bubble::after{
   content: ''; position: absolute; inset: -7px; border-radius: 50%; border: 1.5px solid currentColor;
@@ -628,15 +638,23 @@ html.no-js .reveal{ opacity: 1; transform: none; }
   transition: opacity .25s var(--ease-out), visibility 0s linear .25s;
 }
 .bubble-tile-overlay.is-open{ opacity: 1; visibility: visible; pointer-events: auto; transition: opacity .25s var(--ease-out); }
-.bubble-tile-backdrop{ position: absolute; inset: 0; background: rgba(6,8,11,.5); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); }
+.bubble-tile-backdrop{
+  position: absolute; inset: 0; background: rgba(6,8,11,.5); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
+  transition: opacity .2s var(--ease-out), backdrop-filter .2s var(--ease-out);
+}
 /* a hover-opened tile is a live preview, not a modal: neither the overlay
    nor its backdrop may claim the mouse, or moving from one bubble to the
    next (the whole point of "real time") gets blocked by its own
    full-viewport dimmer — only the card itself stays interactive, so the CTA
    and the close button keep working. Click/tap-opened tiles keep the
-   backdrop solid so tapping outside still closes them. */
+   backdrop solid so tapping outside still closes them.
+   The backdrop also drops its dimming entirely in hover mode: darkening the
+   whole section hid every other bubble in the cluster while previewing one,
+   making the group read as "gone dark" instead of "still browsable" — the
+   card's own shadow and glow are enough to draw the eye without that. */
 .bubble-tile-overlay.is-hover{ pointer-events: none; }
 .bubble-tile-overlay.is-hover .bubble-tile-card{ pointer-events: auto; }
+.bubble-tile-overlay.is-hover .bubble-tile-backdrop{ opacity: 0; backdrop-filter: none; -webkit-backdrop-filter: none; }
 .bubble-tile-card{
   position: fixed; top: 0; left: 0; width: min(380px, calc(100vw - 32px)); aspect-ratio: 4/5;
   max-height: min(520px, calc(100vh - 32px));
