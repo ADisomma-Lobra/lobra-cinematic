@@ -200,7 +200,11 @@
 
     function populate(bubble) {
       const lang = window.LOBRA_LANG || 'it';
-      logoEl.innerHTML = bubble.innerHTML;
+      // bubble.innerHTML is <span class="bubble-inner">svg</span> — that
+      // span is absolutely positioned to fill the bubble's own circle, a
+      // context .bubble-tile-logo doesn't share, so copy just the icon markup
+      const inner = bubble.querySelector('.bubble-inner');
+      logoEl.innerHTML = inner ? inner.innerHTML : bubble.innerHTML;
       nameEl.textContent = bubble.getAttribute('data-name') || '';
       taglineEl.textContent = bubble.getAttribute(lang === 'en' ? 'data-tagline-en' : 'data-tagline-it') || '';
       ctaEl.textContent = lang === 'en' ? 'Learn more' : 'Scopri di più';
