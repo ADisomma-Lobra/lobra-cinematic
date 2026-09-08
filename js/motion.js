@@ -98,31 +98,75 @@
     io.observe(svg);
   }
 
+  /* ---------- partner bubbles: a little life on hover — the icon drifts
+     toward the cursor inside its own circle (a magnetic pull confined to
+     .bubble-inner, deliberately NOT the .tools-bubble element itself, which
+     the scroll-scrub in initToolsReveal below keeps setting x/y/scale/opacity
+     on every scroll tick — animating a child instead means the two never
+     fight over the same transform). ---------- */
+  function initBubbleMotion() {
+    const wrap = document.getElementById('tools-bubbles');
+    if (!wrap || REDUCE || !HAS_GSAP || window.matchMedia('(hover: none)').matches) return;
+    wrap.addEventListener('mousemove', (e) => {
+      const bubble = e.target.closest('.tools-bubble');
+      if (!bubble) return;
+      const inner = bubble.querySelector('.bubble-inner');
+      const rect = bubble.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+      gsap.to(inner, { x: (x / rect.width) * 12, y: (y / rect.height) * 12, duration: 0.3, ease: 'power2.out' });
+    });
+    wrap.addEventListener('mouseout', (e) => {
+      const bubble = e.target.closest('.tools-bubble');
+      if (!bubble || (e.relatedTarget && bubble.contains(e.relatedTarget))) return;
+      gsap.to(bubble.querySelector('.bubble-inner'), { x: 0, y: 0, duration: 0.5, ease: 'elastic.out(1,0.4)' });
+    });
+  }
+
   /* ---------- partner bubble → tile overlay (bendingspoons.com-inspired):
-     click a bubble in "con chi costruiamo" and it morphs — FLIP-style, from
-     its own on-screen circle — into a full card with logo+name top-right,
-     an animated brand-coloured backdrop, and a CTA to that partner's page.
+     hovering a bubble opens it in real time, right where it is — anchored
+     to that bubble and clamped to stay on-screen, never forced to page
+     centre; moving between bubbles glides the same card over instead of
+     closing and reopening it. Touch/keyboard uses tap/Enter to open and an
+     explicit close (X, backdrop, Esc) since there's no hover to leave.
      Delegated on #tools-bubbles so it keeps working after renderTools()
      (re)paints the bubbles; independent of the section's own pinned
-     scroll-scrub, which only ever reads/writes the bubbles' transform. ---------- */
+     scroll-scrub, which only ever reads/writes the bubbles' own transform. ---------- */
   function initToolTiles() {
     const overlay = document.getElementById('bubble-tile-overlay');
     const wrap = document.getElementById('tools-bubbles');
     if (!overlay || !wrap) return;
     const card = document.getElementById('bubble-tile-card');
+    const visual = document.getElementById('bubble-tile-visual');
     const logoEl = document.getElementById('bubble-tile-logo');
     const nameEl = document.getElementById('bubble-tile-name');
     const taglineEl = document.getElementById('bubble-tile-tagline');
     const ctaEl = document.getElementById('bubble-tile-cta');
-    let lastTrigger = null;
-    let lastRect = null;
+    // require BOTH hover and a fine (mouse-like) pointer — (hover:hover)
+    // alone can still read true on some touch/hybrid setups, which is
+    // exactly the case that made a tap synthesize a hover-mode open below
+    const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+    let activeBubble = null;
+    let openedViaHover = false;
+    let openTimer = null;
+    let closeTimer = null;
 
     function contentEls() { return [logoEl, nameEl, taglineEl, ctaEl]; }
 
-    function openTile(bubble) {
-      lastTrigger = bubble;
-      lastRect = bubble.getBoundingClientRect();
+    function setVisual(url) {
+      visual.querySelectorAll('.bubble-tile-media').forEach((el) => el.remove());
+      visual.classList.toggle('has-media', !!url);
+      if (!url) return;
+      const isVideo = /\.(mp4|webm)(\?|$)/i.test(url);
+      const media = document.createElement(isVideo ? 'video' : 'img');
+      media.className = 'bubble-tile-media';
+      if (isVideo) { media.src = url; media.autoplay = true; media.muted = true; media.loop = true; media.playsInline = true; }
+      else { media.src = url; media.alt = ''; }
+      visual.appendChild(media);
+    }
 
+    function populate(bubble) {
       const lang = window.LOBRA_LANG || 'it';
       logoEl.innerHTML = bubble.innerHTML;
       nameEl.textContent = bubble.getAttribute('data-name') || '';
@@ -130,64 +174,162 @@
       ctaEl.textContent = lang === 'en' ? 'Learn more' : 'Scopri di più';
       ctaEl.href = `tecnologia.html?v=${encodeURIComponent(bubble.getAttribute('data-slug') || '')}`;
       card.style.setProperty('--brand', bubble.getAttribute('data-brand') || '');
+      setVisual(bubble.getAttribute('data-media') || '');
+    }
 
-      overlay.classList.add('is-open');
-      overlay.setAttribute('aria-hidden', 'false');
-      document.body.style.overflow = 'hidden';
-      overlay.querySelector('.bubble-tile-close').focus();
+    // anchors the card on the bubble's own centre, clamped so it always
+    // stays fully on-screen — "dynamic" placement instead of one fixed spot.
+    // instant=true skips the CSS left/top transition (used for the very
+    // first open, where the GSAP FLIP transform below carries the motion);
+    // instant=false lets the card glide via CSS when switching bubbles.
+    function positionCard(rect, instant) {
+      const margin = 16;
+      if (instant) card.style.transition = 'none';
+      const w = card.offsetWidth, h = card.offsetHeight;
+      let left = rect.left + rect.width / 2 - w / 2;
+      let top = rect.top + rect.height / 2 - h / 2;
+      left = Math.min(Math.max(margin, left), window.innerWidth - w - margin);
+      top = Math.min(Math.max(margin, top), window.innerHeight - h - margin);
+      card.style.left = left + 'px';
+      card.style.top = top + 'px';
+      if (instant) { void card.offsetHeight; card.style.transition = ''; }
+      return { left, top, width: w, height: h };
+    }
 
-      if (REDUCE || !HAS_GSAP) return;
-      const endRect = card.getBoundingClientRect();
-      const scaleX = lastRect.width / endRect.width;
-      const scaleY = lastRect.height / endRect.height;
-      const dx = (lastRect.left + lastRect.width / 2) - (endRect.left + endRect.width / 2);
-      const dy = (lastRect.top + lastRect.height / 2) - (endRect.top + endRect.height / 2);
-      gsap.set(contentEls(), { opacity: 0 });
-      gsap.fromTo(card,
-        { x: dx, y: dy, scaleX, scaleY, borderRadius: '50%' },
-        { x: 0, y: 0, scaleX: 1, scaleY: 1, borderRadius: '28px', duration: 0.6, ease: 'power3.out',
-          onComplete: () => gsap.to(contentEls(), { opacity: 1, duration: 0.35, stagger: 0.05, ease: 'power1.out' })
-        }
-      );
+    function openTile(bubble, viaHover) {
+      clearTimeout(closeTimer);
+      const alreadyOpen = overlay.classList.contains('is-open');
+      const switching = alreadyOpen && activeBubble && activeBubble !== bubble;
+      activeBubble = bubble;
+      openedViaHover = viaHover;
+      overlay.classList.toggle('is-hover', viaHover);
+      const bubbleRect = bubble.getBoundingClientRect();
+
+      if (!alreadyOpen) {
+        populate(bubble);
+        overlay.classList.add('is-open');
+        overlay.setAttribute('aria-hidden', 'false');
+        if (!viaHover) document.body.style.overflow = 'hidden';
+        if (REDUCE || !HAS_GSAP) { positionCard(bubbleRect, true); return; }
+        gsap.set(contentEls(), { opacity: 0 });
+        const pos = positionCard(bubbleRect, true);
+        const scaleX = bubbleRect.width / pos.width;
+        const scaleY = bubbleRect.height / pos.height;
+        const dx = (bubbleRect.left + bubbleRect.width / 2) - (pos.left + pos.width / 2);
+        const dy = (bubbleRect.top + bubbleRect.height / 2) - (pos.top + pos.height / 2);
+        gsap.fromTo(card,
+          { x: dx, y: dy, scaleX, scaleY, borderRadius: '50%' },
+          { x: 0, y: 0, scaleX: 1, scaleY: 1, borderRadius: '28px', duration: 0.55, ease: 'power3.out',
+            onComplete: () => gsap.to(contentEls(), { opacity: 1, duration: 0.3, stagger: 0.04, ease: 'power1.out' })
+          }
+        );
+      } else if (switching) {
+        positionCard(bubbleRect, false);
+        if (REDUCE || !HAS_GSAP) { populate(bubble); return; }
+        gsap.to(contentEls(), { opacity: 0, duration: 0.12, onComplete: () => {
+          populate(bubble);
+          gsap.to(contentEls(), { opacity: 1, duration: 0.25, stagger: 0.03 });
+        }});
+      }
     }
 
     function closeTile() {
+      if (!overlay.classList.contains('is-open')) return;
       overlay.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
-      const trigger = lastTrigger;
-      const rect = lastRect;
-      lastTrigger = null;
+      const trigger = activeBubble;
+      activeBubble = null;
 
-      if (REDUCE || !HAS_GSAP || !rect) {
+      if (REDUCE || !HAS_GSAP || !trigger) {
         overlay.classList.remove('is-open');
-        if (trigger) trigger.focus();
         return;
       }
-      const endRect = card.getBoundingClientRect();
-      const scaleX = rect.width / endRect.width;
-      const scaleY = rect.height / endRect.height;
-      const dx = (rect.left + rect.width / 2) - (endRect.left + endRect.width / 2);
-      const dy = (rect.top + rect.height / 2) - (endRect.top + endRect.height / 2);
+      const rect = trigger.getBoundingClientRect();
+      const cardRect = card.getBoundingClientRect();
+      const scaleX = rect.width / cardRect.width;
+      const scaleY = rect.height / cardRect.height;
+      const dx = (rect.left + rect.width / 2) - (cardRect.left + cardRect.width / 2);
+      const dy = (rect.top + rect.height / 2) - (cardRect.top + cardRect.height / 2);
       gsap.to(contentEls(), { opacity: 0, duration: 0.15 });
       gsap.to(card, {
-        x: dx, y: dy, scaleX, scaleY, borderRadius: '50%', duration: 0.45, ease: 'power2.in',
+        x: dx, y: dy, scaleX, scaleY, borderRadius: '50%', duration: 0.4, ease: 'power2.in',
         onComplete: () => {
           overlay.classList.remove('is-open');
           gsap.set(card, { x: 0, y: 0, scaleX: 1, scaleY: 1, borderRadius: '28px' });
-          if (trigger) trigger.focus();
         }
       });
     }
 
+    function scheduleOpen(bubble) {
+      clearTimeout(closeTimer);
+      clearTimeout(openTimer);
+      openTimer = setTimeout(() => openTile(bubble, true), 90);
+    }
+    function scheduleClose() {
+      clearTimeout(openTimer);
+      clearTimeout(closeTimer);
+      closeTimer = setTimeout(closeTile, 240);
+    }
+
+    // click/keyboard-Enter: always wired, covers touch and keyboard users.
+    // Some touch browsers synthesize a mouseover right before the tap's own
+    // click (for legacy :hover compatibility), which can open the SAME
+    // bubble in hover-mode a beat earlier — in that case this click is a
+    // no-op by the "already open, same bubble" check below, so explicitly
+    // upgrade it to click-mode (locks scroll, drops the hover semantics)
+    // instead of silently leaving it stuck in a hover state a tap never asked for.
     wrap.addEventListener('click', (e) => {
       const bubble = e.target.closest('.tools-bubble');
-      if (bubble) openTile(bubble);
+      if (!bubble) return;
+      if (overlay.classList.contains('is-open') && activeBubble === bubble && openedViaHover) {
+        openedViaHover = false;
+        overlay.classList.remove('is-hover');
+        document.body.style.overflow = 'hidden';
+        return;
+      }
+      openTile(bubble, false);
     });
     wrap.addEventListener('keydown', (e) => {
       if (e.key !== 'Enter' && e.key !== ' ') return;
       const bubble = e.target.closest('.tools-bubble');
-      if (bubble) { e.preventDefault(); openTile(bubble); }
+      if (bubble) { e.preventDefault(); openTile(bubble, false); }
     });
+    // focus parity for keyboard/screen-reader users: tabbing to a bubble
+    // previews it the same way a mouse hover would, blur closes it again.
+    // :focus-visible is what tells keyboard focus apart from a tap/click
+    // also focusing the element — without it, a touch tap would open in
+    // hover-mode (no scroll lock, closes if focus moves at all) instead of
+    // the deliberate click-mode a tap actually asked for.
+    wrap.addEventListener('focusin', (e) => {
+      const bubble = e.target.closest('.tools-bubble');
+      if (bubble && bubble.matches(':focus-visible')) openTile(bubble, true);
+    });
+    wrap.addEventListener('focusout', (e) => {
+      const bubble = e.target.closest('.tools-bubble');
+      if (bubble && !(overlay.contains(e.relatedTarget))) scheduleClose();
+    });
+
+    if (canHover && !REDUCE) {
+      wrap.addEventListener('mouseover', (e) => {
+        const bubble = e.target.closest('.tools-bubble');
+        if (bubble) scheduleOpen(bubble);
+      });
+      wrap.addEventListener('mouseout', (e) => {
+        const bubble = e.target.closest('.tools-bubble');
+        const to = e.relatedTarget;
+        if (bubble && !(to && to.closest && to.closest('.tools-bubble') === bubble)) scheduleClose();
+      });
+      card.addEventListener('mouseenter', () => { if (openedViaHover) clearTimeout(closeTimer); });
+      card.addEventListener('mouseleave', () => { if (openedViaHover) scheduleClose(); });
+      // a hover-opened tile is a passing preview, not a deliberate modal —
+      // if the user scrolls on (advancing the section's own pinned
+      // scroll-scrub, which keeps moving bubbles underneath it) just close it
+      // rather than leave it stranded over wherever the bubble used to be
+      window.addEventListener('scroll', () => {
+        if (openedViaHover && overlay.classList.contains('is-open')) closeTile();
+      }, { passive: true });
+    }
+
     overlay.querySelectorAll('[data-tile-close]').forEach((el) => el.addEventListener('click', closeTile));
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && overlay.classList.contains('is-open')) closeTile();
@@ -435,7 +577,7 @@
   }
 
   window.LobraMotion = {
-    initHeaderAndProgress, initCursorFx, initReveals, initMagnetic, initTrustMark, initToolTiles,
+    initHeaderAndProgress, initCursorFx, initReveals, initMagnetic, initTrustMark, initToolTiles, initBubbleMotion,
     initHeroDive, initToolsReveal, initScrubCopy, initIndustries, initCounters
   };
 })();

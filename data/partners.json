@@ -1,9 +1,9 @@
 [
-  { "name": "Salesforce", "slug": "salesforce", "brandColor": "#00A1E0" },
-  { "name": "SAP", "slug": "sap", "brandColor": "#0FAAFF" },
-  { "name": "Microsoft", "slug": "microsoft", "brandColor": "#00A4EF" },
-  { "name": "Odoo", "slug": "odoo", "brandColor": "#714B67" },
-  { "name": "Shopify", "slug": "shopify", "brandColor": "#95BF47" },
-  { "name": "Informatica", "slug": "informatica", "brandColor": "#CC2C33" },
-  { "name": "OpenText", "slug": "opentext", "brandColor": "#CC2C33" }
+  { "name": "Salesforce", "slug": "salesforce", "brandColor": "#00A1E0", "media": null },
+  { "name": "SAP", "slug": "sap", "brandColor": "#0FAAFF", "media": null },
+  { "name": "Microsoft", "slug": "microsoft", "brandColor": "#00A4EF", "media": null },
+  { "name": "Odoo", "slug": "odoo", "brandColor": "#714B67", "media": null },
+  { "name": "Shopify", "slug": "shopify", "brandColor": "#95BF47", "media": null },
+  { "name": "Informatica", "slug": "informatica", "brandColor": "#CC2C33", "media": null },
+  { "name": "OpenText", "slug": "opentext", "brandColor": "#CC2C33", "media": null }
 ]

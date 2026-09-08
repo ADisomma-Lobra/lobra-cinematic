@@ -53,7 +53,13 @@
   }
   function getStoryblokPartners() {
     return fromStoryblokOr('partners_list', (it) =>
-      it.items.map((item) => ({ name: item.name, slug: item.slug, brandColor: item.brand_color })), 'partners');
+      it.items.map((item) => ({
+        name: item.name, slug: item.slug, brandColor: item.brand_color,
+        // optional per-partner tile background (image or short looping
+        // video) editors can add in Storyblok; falls back to the animated
+        // brand-colour blobs in the tile CSS when this field is empty
+        media: window.LobraCMS.assetUrl(item, 'tile_media')
+      })), 'partners');
   }
   function getStoryblokSectors() {
     return fromStoryblokOr('sectors_list', (it, en) =>
@@ -151,7 +157,8 @@
               aria-label="${esc(p.name)}" title="${esc(p.name)}"
               style="top:${pos.top};left:${pos.left};animation-delay:${(i * 0.35).toFixed(2)}s;color:${esc(p.brandColor)}"
               data-slug="${esc(p.slug)}" data-name="${esc(p.name)}" data-brand="${esc(p.brandColor)}"
-              data-tagline-it="${esc(p.taglineIt)}" data-tagline-en="${esc(p.taglineEn)}">${p.svg}</div>`;
+              data-media="${esc(p.media || '')}"
+              data-tagline-it="${esc(p.taglineIt)}" data-tagline-en="${esc(p.taglineEn)}"><span class="bubble-inner">${p.svg}</span></div>`;
           })
           .join('');
         document.dispatchEvent(new CustomEvent('lobra:tools-ready'));
