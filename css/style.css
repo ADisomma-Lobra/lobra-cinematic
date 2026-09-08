@@ -92,6 +92,10 @@ h1,h2,h3,h4{ font-family: var(--font-display); font-weight: 600; letter-spacing:
    the same override .on-dark gives, whether or not that class is present */
 .tools-scene .eyebrow, .industries-stage .eyebrow{ color: var(--on-ink-muted); }
 .tools-scene .eyebrow::before, .industries-stage .eyebrow::before{ background: var(--crimson); }
+/* .final-cta is on the crimson background itself, not --ink, so the dot
+   above (also crimson) would vanish here — needs its own pairing */
+.final-cta .eyebrow{ color: rgba(255,255,255,.75); }
+.final-cta .eyebrow::before{ background: #fff; }
 
 .h-mega{ font-size: clamp(40px, 6.4vw, 92px); line-height: 1; }
 .h-display{ font-size: clamp(32px, 4.4vw, 58px); line-height: 1.08; }
