@@ -169,6 +169,26 @@ section[id]{ scroll-margin-top: 84px; }
   .nav-toggle{ display: inline-flex; }
 }
 
+/* Home only, at every width: a deliberately quiet header for the piano
+   sequenza page — just the logo, the language switch and a burger, not the
+   full link row. The hero already carries its own "Contattaci" button, and
+   the drawer still lists every page, so nothing actually becomes
+   unreachable. Inner pages keep the ordinary responsive header (full row
+   on desktop, burger under 1180px) since those are for moving between
+   institutional pages quickly. */
+body[data-page="home"] .header-row{ display: flex; justify-content: space-between; }
+body[data-page="home"] .header-actions .btn{ display: none; }
+body[data-page="home"] .primary-nav{
+  position: fixed; top: 80px; left: 0; right: 0; bottom: 0; width: 100%; height: calc(100dvh - 80px);
+  background: var(--bg); flex-direction: column; padding: var(--space-7) var(--gutter);
+  transform: translateY(-8px); opacity: 0; pointer-events: none;
+  transition: opacity var(--dur-med) var(--ease-out), transform var(--dur-med) var(--ease-out); overflow-y: auto;
+}
+body[data-page="home"] .primary-nav ul{ flex-direction: column; align-items: flex-start; gap: var(--space-5); width: 100%; }
+body[data-page="home"] .primary-nav a{ font-size: 21px; color: var(--ink); }
+body[data-page="home"] .primary-nav.is-open{ opacity: 1; transform: translateY(0); pointer-events: auto; }
+body[data-page="home"] .nav-toggle{ display: inline-flex; }
+
 /* ---------------------------------- buttons ---------------------------------- */
 .btn{
   display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2);
