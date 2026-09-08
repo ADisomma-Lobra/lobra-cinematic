@@ -71,6 +71,33 @@
     els.forEach((el) => io.observe(el));
   }
 
+  /* ---------- trust-section mark: same reveal as lobra.com's original
+     "slide3" illustration (animateSlide3 in slideAnimations.js) — the red
+     dots stagger in first, then the dark ring outlines stagger in after;
+     the center highlighted ring never fades, it's the anchor ---------- */
+  function initTrustMark() {
+    const svg = document.getElementById('trust-mark');
+    if (!svg) return;
+    const dots = svg.querySelectorAll('.mark-dot');
+    const rings = svg.querySelectorAll('.mark-ring');
+    if (!dots.length && !rings.length) return;
+    if (REDUCE || !HAS_GSAP) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          io.unobserve(entry.target);
+          gsap.set([dots, rings], { opacity: 0 });
+          const tl = gsap.timeline();
+          tl.to(dots, { opacity: 1, duration: 0.5, stagger: 0.1, ease: 'power2.in' })
+            .to(rings, { opacity: 1, duration: 0.5, stagger: 0.1, ease: 'power2.in' });
+        });
+      },
+      { threshold: 0.35 }
+    );
+    io.observe(svg);
+  }
+
   /* ---------- magnetic buttons ---------- */
   function initMagnetic() {
     if (REDUCE || !HAS_GSAP || window.matchMedia('(hover: none)').matches) return;
@@ -305,7 +332,7 @@
   }
 
   window.LobraMotion = {
-    initHeaderAndProgress, initCursorFx, initReveals, initMagnetic,
+    initHeaderAndProgress, initCursorFx, initReveals, initMagnetic, initTrustMark,
     initHeroDive, initToolsReveal, initScrubCopy, initIndustries, initCounters
   };
 })();
