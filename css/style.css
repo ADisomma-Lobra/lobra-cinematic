@@ -242,7 +242,7 @@ html.no-js .reveal{ opacity: 1; transform: none; }
 /* WebGL gradient mesh, mounted by LobraMotion.initHeroGradient() (see
    js/gradient-wave.js) — pure texture, kept pale so the dark hero text
    never needs a scrim on top of it. Sits behind the waves/fish/copy. */
-.hero-gradient{ position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; opacity: .8; }
+.hero-gradient{ position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; opacity: 1; }
 .hero-cinematic .hero-eyebrow{ margin-bottom: var(--space-5); }
 .hero-cinematic .hero-title{ max-width: 15ch; }
 .hero-cinematic .hero-lede{ margin-top: var(--space-6); max-width: 52ch; }
