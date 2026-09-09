@@ -14,7 +14,6 @@
   <noscript><style>.reveal{opacity:1!important;transform:none!important;}</style></noscript>
 </head>
 <body data-page="services">
-  <div id="cursor-fx" aria-hidden="true"></div>
   <div class="scroll-progress" id="scroll-progress"></div>
   <a class="skip-link" href="#main">Vai al contenuto principale</a>
   <header id="site-header" class="site-header"></header>
@@ -60,7 +59,6 @@
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       LobraMotion.initHeaderAndProgress();
-      LobraMotion.initCursorFx();
       LobraRender.renderServices('all-services-grid').then(function () {
         LobraMotion.initReveals();
         LobraMotion.initMagnetic();

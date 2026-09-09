@@ -37,19 +37,22 @@
     window.addEventListener('resize', update);
   }
 
-  /* ---------- cursor follower ---------- */
-  function initCursorFx() {
-    const fx = document.getElementById('cursor-fx');
-    if (!fx || REDUCE || !HAS_GSAP || window.matchMedia('(hover: none)').matches) return;
-    const moveX = gsap.quickTo(fx, 'x', { duration: 0.45, ease: 'power3' });
-    const moveY = gsap.quickTo(fx, 'y', { duration: 0.45, ease: 'power3' });
-    window.addEventListener('mousemove', (e) => {
-      fx.classList.add('is-active');
-      moveX(e.clientX);
-      moveY(e.clientY);
+  /* ---------- hero background: ambient WebGL gradient mesh (js/gradient-
+     wave.js). Switch: set #hero-gradient's data-gradient to "off" (or
+     remove the element) in index.html to turn this off at any time — no
+     other code needs to change, this just won't mount. Kept pale (site's
+     own whitesmoke/crimson-tint palette, low amplitude) so it reads as
+     quiet texture behind the hero copy rather than a loud banner. ---------- */
+  function initHeroGradient() {
+    const el = document.getElementById('hero-gradient');
+    if (!el || el.getAttribute('data-gradient') === 'off') return;
+    if (REDUCE || !window.LobraGradientWave) return;
+    window.LobraGradientWave.mount(el, {
+      colors: ['#F8F8F8', '#FFFFFF', '#F1F0EC', '#FDE9EA'],
+      shadowPower: 4,
+      noiseSpeed: 0.000006,
+      deform: { incline: 0.15, offsetTop: -0.3, offsetBottom: -0.3, noiseAmp: 140, noiseFlow: 2.2 }
     });
-    document.addEventListener('mouseover', (e) => { if (e.target.closest('a, button')) fx.classList.add('is-hover'); });
-    document.addEventListener('mouseout', (e) => { if (e.target.closest('a, button')) fx.classList.remove('is-hover'); });
   }
 
   /* ---------- generic reveals ---------- */
@@ -613,7 +616,7 @@
   }
 
   window.LobraMotion = {
-    initHeaderAndProgress, initCursorFx, initReveals, initMagnetic, initTrustMark, initToolTiles, initBubbleMotion, initFloatingPaths,
+    initHeaderAndProgress, initHeroGradient, initReveals, initMagnetic, initTrustMark, initToolTiles, initBubbleMotion, initFloatingPaths,
     initHeroDive, initToolsReveal, initScrubCopy, initIndustries, initCounters
   };
 })();

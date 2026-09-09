@@ -14,7 +14,6 @@
   <noscript><style>.reveal{opacity:1!important;transform:none!important;}.dive-panel,.reveal-circle,.reveal-media{opacity:1!important;transform:none!important;}</style></noscript>
 </head>
 <body data-page="home">
-  <div id="cursor-fx" aria-hidden="true"></div>
   <div class="scroll-progress" id="scroll-progress"></div>
   <a class="skip-link" href="#main">Vai al contenuto principale</a>
   <header id="site-header" class="site-header"></header>
@@ -23,6 +22,10 @@
 
     <!-- ============ ACT 1 — HERO ============ -->
     <section class="hero-cinematic" id="top">
+      <!-- switch: change data-gradient to "off" (or delete this div) to
+           turn the background off at any time — LobraMotion.initHeroGradient()
+           checks this attribute before mounting anything -->
+      <div class="hero-gradient" id="hero-gradient" data-gradient="on" aria-hidden="true"></div>
       <div class="hero-waves" aria-hidden="true">
         <span class="line line-1"></span>
         <span class="line line-2"></span>
@@ -255,6 +258,7 @@
   <script src="js/cms.js"></script>
   <script src="js/i18n.js"></script>
   <script src="js/render.js"></script>
+  <script src="js/gradient-wave.js"></script>
   <script src="js/motion.js"></script>
   <script>
     function paintTrustBadges(dict) {
@@ -278,7 +282,7 @@
       ]);
 
       LobraMotion.initHeaderAndProgress();
-      LobraMotion.initCursorFx();
+      LobraMotion.initHeroGradient();
       LobraMotion.initToolTiles();
       LobraMotion.initBubbleMotion();
       LobraMotion.initFloatingPaths();
